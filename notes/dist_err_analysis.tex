@@ -1,0 +1,173 @@
+\section{Distributions and Uncertainty}
+
+\begin{itemize}
+    \item For \textbf{nonstationary} PDFs, the moments are in terms of time.
+    \item For \textbf{wide-sense stationary (WSS)} PDFs, only the \textbf{first two moments} are stationary, which represents most real-life phenomena.
+    \item For \textbf{stationary} PDFs, all the moments are constant and \emph{not} in terms of time.
+    \item \textbf{Moment generating function (continuous)}:
+    \begin{equation*}
+        n^\text{th} \text{ moment} = \int_{-\infty}^{\infty} x^n \, \text{PDF}(x) \, \partial x
+    \end{equation*}
+    \item \textbf{Moment generating function (discrete)}:
+    \begin{equation*}
+        n^\text{th} \text{ moment} = \sum_{i=1}^{\infty} x_i^n \, \text{PDF}(x_i)
+    \end{equation*}
+    \item This class only focuses on the Gaussian, Binomial, and Poisson distributions. The rest are extra information.
+    \item Remember that probabilities multiply. The probability of reproducing an entire dataset is
+    \begin{equation*}
+        \prod_{i=1}^{N} \text{PDF}(x_i) = p_1 p_2 \dots p_N
+    \end{equation*}
+    \item General process of data collection and processing:
+    \begin{enumerate}
+        \item Determine PDF.
+        \item Create estimators for moments from data.
+        \item Determine if estimators are biased or unbiased using \textbf{expectation values}.
+        \item Determine the chi-squared goodness of fit.
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Gaussian Distribution}
+
+Also known as the normal distribution. Represents humans and many natural phenomena.
+
+\begin{equation*}
+    f(x; \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left[-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right]
+\end{equation*}
+\begin{itemize}
+    \item $\mu$ and $\sigma$ are parameters.
+    \item $1^\text{st}$ moment (mean): $\mu$
+    \item $2^\text{nd}$ moment (variance): $\sigma^2$
+    \item Estimator for $1^\text{st}$ moment:
+    \begin{equation*}
+        \bar{x} = \frac{1}{N} \sum_{i=1}^{N} x_i
+    \end{equation*}
+    \item Estimator for $2^\text{nd}$ moment:
+    \begin{equation*}
+        s^2 = \frac{1}{N-1} \sum_{i=1}^{N} (x_i - \bar{x})^2
+    \end{equation*}
+    \item 3rd moment (skewness)
+    \item 4th moment (kurtosis)
+\end{itemize}
+
+\subsection{Binomial Distribution}
+
+\begin{equation*}
+    \text{PDF}(x; n, p) = \binom{n}{x} p^x (1-p)^{n-x}
+\end{equation*}
+
+where
+
+\begin{equation*}
+    \binom{n}{x} = \frac{n!}{x!(n-x)!}
+\end{equation*}
+\begin{itemize}
+    \item Trials must be \textbf{independent}.
+    \item For $p$ large and $n$ large, similar to the \textbf{Gaussian distribution}.
+    \item For $p$ low and $n$ large, similar to the \textbf{Poisson distribution}.
+    \item $n$ and $p$ are parameters.
+    \item $1^\text{st}$ moment: $np$
+    \item $2^\text{nd}$ moment: $np(1-p)$
+    \item $3^\text{rd}$ moment: $\frac{(1-p)-p}{\sqrt{np(1-p)}}$
+    \item Estimator for $1^\text{st}$ moment:
+    \begin{equation*}
+        \bar{x} = \frac{1}{N} \sum_{i=1}^{N} x_i
+    \end{equation*}
+    \item Estimator for $2^\text{nd}$ moment:
+    \begin{equation*}
+        s^2 = \frac{1}{N-1} \sum_{i=1}^{N} (x_i - \bar{x})^2
+    \end{equation*}
+\end{itemize}
+
+\subsection{Poisson Distribution}
+Represents scenarios with counting and waiting for events.
+
+\begin{equation*}
+    \text{PDF}(x; \lambda) = \frac{\lambda^x e^{-\lambda}}{x!}
+\end{equation*}
+\begin{itemize}
+    \item $\lambda$ is the parameter.
+    \item $1^\text{st}$ moment: $\lambda$
+    \item $2^\text{nd}$ moment: $\lambda$
+    \item $3^\text{rd}$ moment: $\frac{1}{\sqrt{\lambda}}$
+\end{itemize}
+
+\subsection{Laplace Distribution}
+
+\begin{equation*}
+    f(x; \mu, b) = \frac{1}{2b} \exp\left[-\frac{x-\mu}{b}\right]
+\end{equation*}
+\begin{itemize}
+    \item $\mu$ and $b$ are parameters. 
+    \item $\mu$ is a location parameter.
+    \item $b > 0$ is called "diversity."
+    \item $1^\text{st}$ moment: $\mu$
+    \item $2^\text{nd}$ moment: $2b^2$
+    \item $3^\text{rd}$ moment: $\emptyset$
+\end{itemize}
+
+\subsection{Gamma Distribution}
+
+\begin{equation*}
+    f(x; \alpha, \beta) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x}
+\end{equation*}
+
+where $\Gamma$ is the gamma function.
+
+\begin{itemize}
+    \item $\alpha$ and $\beta$ are parameters.
+    \item $\alpha$ is the shape parameter.
+    \item $\frac{1}{\beta}$ is the scale parameter.
+    \item $1^\text{st}$ moment: $\frac{\alpha}{\beta}$
+    \item $2^\text{nd}$ moment: $\frac{\alpha}{\beta^2}$
+    \item $3^\text{rd}$ moment: $\frac{2}{\sqrt{\alpha}}$
+\end{itemize}
+
+\subsection{Assumptions}
+We often assume that
+\begin{enumerate}
+    \item Stationary or WSS PDF: $\sigma_i \approx \sigma$
+    \item Each measurement is independent and identically distributed (IID).
+    \item \textbf{Method of Maximum Liklihood (MML)}
+    \begin{itemize}
+        \item Also known as Maximum Likelihood Method (MLM).
+        \item Maximum probability of reproducing the data.
+        \item An alternate method is \textbf{Maximum Entropy Method (MEM)} that seeks to add as much disorder as possible to the datapoints, but this class only focuses on MML.
+    \end{itemize}
+    \item An implicit assumption is the zero-mean process. We assume or subtract off the mean to make calculations much easier. 
+\end{enumerate}
+
+\subsection{Expectation Values}
+
+\begin{equation*}
+    \langle x_i \rangle = E[x_i] = \mu \quad \text{(typically)}
+\end{equation*}
+
+Examples:
+\begin{itemize}
+    \item We expect the $\bar{x}$ estimator to yield $\mu$: $\langle \bar{x} \rangle = \mu $
+    \item And similarly for $s^2$: $\langle s^2 \rangle = \sigma^2 $
+\end{itemize}
+
+A rule for expectation values is that you ignore constants:
+
+\begin{equation*}
+    \langle c \rangle = c
+\end{equation*}
+
+You can also ignore summations:
+
+\begin{equation*}
+    \langle \sum_{i=1}^N x_i \rangle = \sum_{i=1}^N \langle x_i \rangle
+\end{equation*}
+
+\subsection{Uncertainty Propagation}
+
+\begin{itemize}
+    \item Uncertainty is represented by $\sigma$. For example, the uncertainty in $\bar{x}$ is denoted as $\sigma_{\bar x}$.
+    \item Uncertainty can either propagate in a \textbf{worst case} or \textbf{even-steven} (informally named by our professor) scenario.
+    \item Basics for worst case propagation: Suppose there are height measurements $h_1$ and $h_2$ with uncertainties $\sigma_{h_1}$ and $\sigma_{h_2}$. Adding the two heights together also adds their uncertainties: $(h_1 \pm \sigma_{h_1}) + (h_2 \pm \sigma_{h_2}) = (h_1 + h_2) \pm (\sigma_{h_1} + \sigma_{h_2})$. This is the simplest example, but this can get much more complex, especially for operations like multiplication.
+    \item \textbf{Even-steven formula} (Taylor series approximation):
+    \begin{equation*}
+        \sigma_{x}^2 \approx \sigma_u^2\left(\frac{\partial x}{\partial u}\right)^2 + \sigma_v^2\left(\frac{\partial x}{\partial v}\right)^2 + \dots + 2\sigma_{uv}^2\left(\frac{\partial x}{\partial u}\right)\left(\frac{\partial x}{\partial v}\right) + \dots
+    \end{equation*} 
+\end{itemize}
