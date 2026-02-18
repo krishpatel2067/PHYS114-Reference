@@ -24,6 +24,7 @@
         \item Determine if estimators are biased or unbiased using \textbf{expectation values}.
         \item Determine the chi-squared goodness of fit.
     \end{enumerate}
+    \item From strongest to weakest: independent, uncorrelated, and no covariance.
 \end{itemize}
 
 \subsection{Gaussian Distribution}
@@ -47,6 +48,18 @@ Also known as the normal distribution. Represents humans and many natural phenom
     \end{equation*}
     \item 3rd moment (skewness)
     \item 4th moment (kurtosis)
+    \item Uncertainty for $1^\text{st}$ moment:
+    \begin{equation*}
+        \sigma_{\bar{x}} = \frac{\sigma}{\sqrt{N}}
+    \end{equation*}
+    This signals diminishing returns for increasing $N$.
+    \item However, the above is assuming WSS. In a case without WSS:
+    \begin{equation*}
+        \bar{x} = \frac{\sum_{i=1}^{N}\left(\frac{x_i}{\sigma_i^2}\right)}{\sum_{i=1}^{N} \left(\frac{1}{\sigma_i^2}\right)}
+    \end{equation*}
+    \begin{equation*}
+        \sigma_{\bar{x}}^2 = \frac{1}{\sum_{i=1}^{N} \frac{1}{\sigma_i^2}}
+    \end{equation*}
 \end{itemize}
 
 \subsection{Binomial Distribution}
@@ -89,6 +102,18 @@ Represents scenarios with counting and waiting for events.
     \item $1^\text{st}$ moment: $\lambda$
     \item $2^\text{nd}$ moment: $\lambda$
     \item $3^\text{rd}$ moment: $\frac{1}{\sqrt{\lambda}}$
+    \item Estimator for $1^\text{st}$ moment:
+    \begin{equation*}
+        \bar{x} = \sum_{i=1}^{N} x_i
+    \end{equation*}
+    \item Estimator for $2^\text{nd}$ moment:
+    \begin{equation*}
+        s^2 = \sum_{i=1}^{N} x_i
+    \end{equation*}
+    \item Percent error:
+    \begin{equation*}
+        \frac{1}{\sqrt{\bar{x}}} \times 100\%
+    \end{equation*}
 \end{itemize}
 
 \subsection{Laplace Distribution}
@@ -169,5 +194,44 @@ You can also ignore summations:
     \item \textbf{Even-steven formula} (Taylor series approximation):
     \begin{equation*}
         \sigma_{x}^2 \approx \sigma_u^2\left(\frac{\partial x}{\partial u}\right)^2 + \sigma_v^2\left(\frac{\partial x}{\partial v}\right)^2 + \dots + 2\sigma_{uv}^2\left(\frac{\partial x}{\partial u}\right)\left(\frac{\partial x}{\partial v}\right) + \dots
-    \end{equation*} 
+    \end{equation*}
+    \begin{equation*}
+        \sigma_{uv}^2 = \frac{1}{N-1} \sum_{i=1}^N (u_i - \bar{u})(v_i - \bar{v})
+    \end{equation*}
+    \begin{itemize}
+        \item $\sigma_{uv}^2$ is the covariance, which is 0 when both $u$ and $v$ are \textbf{independent}.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Chi-Squared Goodness of Fit}
+
+Given a histogram:
+
+\begin{equation*}
+    \chi^2 \equiv \sum_{j=1}^{n} \frac{(h(x_j) - NP(x_j))^2}{\sigma_j(h)^2} = \sum_{i=1}^{N} \frac{(x_i - \bar{x})^2}{\sigma_i^2}
+\end{equation*}
+
+where
+\begin{itemize}
+    \item $n$ is the number of bins.
+    \item $h(x_j)$ is the value of the $j$-th bin.
+    \item $N$ is the total number of measurements.
+    \item $P(x_j)$ is the probability of the $j$-th bin.
+    \item $\sigma_j(h)^2$ is the variance in the $j$-th bin.
+\end{itemize}
+\,
+\begin{itemize}
+    \item $\chi^2$ is a measure of the goodness of fit of a model to the data.
+    \item A smaller $\chi^2$ indicates a better fit. Ideal value is 0, but in practice it is around $n$ because the numerator and denominator of the summation are around the same order of magnitude.
+    \item \textbf{reduced chi-squared}:
+    \begin{equation*}
+        \chi^2_\nu = \frac{\chi^2}{\nu}
+    \end{equation*}
+    \begin{equation*}
+        \nu = n - n_c
+    \end{equation*}
+    \begin{itemize}
+        \item $n_c$ is the number of constraints. Usually 1.
+        \item $\nu$ is the number of degrees of freedom. Usually $n - 1$ with no outliers.
+    \end{itemize}
 \end{itemize}
