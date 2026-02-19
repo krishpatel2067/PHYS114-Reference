@@ -1,0 +1,62 @@
+\section{Forward Model and Photometer}
+
+\subsection{Forward Model}
+
+A mathematical or quantitative description of the problem you're solving. One can use synthetic data and example numbers to test.
+
+\subsection{Photometer}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/photometer_diagram.png}
+    \caption{A diagram of a photometer.}
+    \label{fig:photometer_diagram}
+\end{figure}
+
+\begin{itemize}
+    \item Measures the number of photons from a source.
+    \item IF stands for interference filter.
+    \item RX stands for receiver.
+    \item TX stands for transmitter.
+    \item The receiver can either be a \textbf{photomultiplier tube (PMT)} or a \textbf{single-photon avalanche diode (SPAD)}.
+    \item \textbf{Charge-coupled devices (CCDs)} can be found in smartphones, but scientific-grade CCDs are much more sensitive and expensive.
+    \item \textbf{Photon count formula}:
+    \begin{equation*}
+        N = N_{\text{signal}} + N_{\text{noise}}
+    \end{equation*}
+    where
+    \begin{itemize}
+        \item $N$ is the total number of photons.
+        \item $N_{\text{signal}}$ is the number of photons from the desired source.
+        \item $N_{\text{noise}}$ is the number of photons from other (undesirable) sources.
+    \end{itemize}
+    \item \textbf{Noise photon count formula}:
+    \begin{equation*}
+        N_{\text{noise}} = N_C \Delta t
+    \end{equation*}
+    where
+    \begin{itemize}
+        \item $N_C \, [\text{counts/s}]$ is the noise count rate.
+        \item $\Delta t \, [s]$ is the \textbf{integration time}, the time interval at which the detector collects photons.
+    \end{itemize}
+    \item \textbf{Signal photon count formula}:
+    \begin{equation*}
+        N_{\text{signal}} = BA\Delta t \, \Omega T_A \nu_{RX}
+    \end{equation*}
+    \begin{equation*}
+        \Omega = \frac{A}{r^2} = 2\pi(1-\cos\alpha)
+    \end{equation*}
+    where
+    \begin{itemize}
+        \item $B \, [\text{photons}/(\text{s} \cdot \text{m}^2 \cdot \text{str})]$ is a constant.
+        \item $A \, [\text{m}^2]$ for $N_{\text{signal}}$ is the area of the telescope.
+        \item $\Delta t \, [s]$ is the integration time.
+        \item $\Omega \, [\text{str}]$ is the solid angle.
+        \item $T_A$ is the atmospheric transmission.
+        \item $\nu_{RX}$ is the receiver efficiency.
+        \item $A$ for $N_{\text{noise}}$ is the area of the detector.
+        \item $r$ is the focal length of the telescope.
+        \item $\alpha$ is the half-angle of the cone of light collected by the telescope, also known as the field of view.
+    \end{itemize}
+    Note: $A\Omega$ is a conversed quality called the \textbf{etendue}, and it will be explored later.
+\end{itemize}
