@@ -5,26 +5,31 @@
     \item For \textbf{wide-sense stationary (WSS)} PDFs, only the \textbf{first two moments} are stationary, which represents most real-life phenomena.
     \item For \textbf{stationary} PDFs, all the moments are constant and \emph{not} in terms of time.
     \item \textbf{Moment generating function (continuous)}:
-    \begin{equation*}
-        n^\text{th} \text{ moment} = \int_{-\infty}^{\infty} x^n \, \text{PDF}(x) \, \partial x
-    \end{equation*}
+          \begin{equation*}
+              n^\text{th} \text{ moment} = \int_{-\infty}^{\infty} x^n \, \text{PDF}(x) \, \partial x
+          \end{equation*}
     \item \textbf{Moment generating function (discrete)}:
-    \begin{equation*}
-        n^\text{th} \text{ moment} = \sum_{i=1}^{\infty} x_i^n \, \text{PDF}(x_i)
-    \end{equation*}
+          \begin{equation*}
+              n^\text{th} \text{ moment} = \sum_{i=1}^{\infty} x_i^n \, \text{PDF}(x_i)
+          \end{equation*}
     \item This class only focuses on the Gaussian, Binomial, and Poisson distributions. The rest are extra information.
     \item Remember that probabilities multiply. The probability of reproducing an entire dataset is
-    \begin{equation*}
-        \prod_{i=1}^{N} \text{PDF}(x_i) = p_1 p_2 \dots p_N
-    \end{equation*}
+          \begin{equation*}
+              \prod_{i=1}^{N} \text{PDF}(x_i) = p_1 p_2 \dots p_N
+          \end{equation*}
     \item General process of data collection and processing:
-    \begin{enumerate}
-        \item Determine PDF.
-        \item Create estimators for moments from data.
-        \item Determine if estimators are biased or unbiased using \textbf{expectation values}.
-        \item Determine the chi-squared goodness of fit.
-    \end{enumerate}
+          \begin{enumerate}
+              \item Determine PDF.
+              \item Create estimators for moments from data.
+              \item Determine if estimators are biased or unbiased using \textbf{expectation values}.
+              \item Determine the chi-squared goodness of fit.
+          \end{enumerate}
     \item From strongest to weakest: independent, uncorrelated, and no covariance.
+          \begin{itemize}
+              \item \textbf{Independent}: no true mathematical representation of independence.
+              \item \textbf{Uncorrelated}: $r \equiv \frac{\sigma^2_{XY}}{\sigma_X \sigma_Y} = 0$
+              \item \textbf{No covariance}: $\sigma^2_{XY} = 0$
+          \end{itemize}
 \end{itemize}
 
 \subsection{Gaussian Distribution}
@@ -39,27 +44,27 @@ Also known as the normal distribution. Represents humans and many natural phenom
     \item $1^\text{st}$ moment (mean): $\mu$
     \item $2^\text{nd}$ moment (variance): $\sigma^2$
     \item Estimator for $1^\text{st}$ moment:
-    \begin{equation*}
-        \bar{x} = \frac{1}{N} \sum_{i=1}^{N} x_i
-    \end{equation*}
+          \begin{equation*}
+              \bar{x} = \frac{1}{N} \sum_{i=1}^{N} x_i
+          \end{equation*}
     \item Estimator for $2^\text{nd}$ moment:
-    \begin{equation*}
-        s^2 = \frac{1}{N-1} \sum_{i=1}^{N} (x_i - \bar{x})^2
-    \end{equation*}
+          \begin{equation*}
+              s^2 = \frac{1}{N-1} \sum_{i=1}^{N} (x_i - \bar{x})^2
+          \end{equation*}
     \item 3rd moment (skewness)
     \item 4th moment (kurtosis)
     \item Uncertainty for $1^\text{st}$ moment:
-    \begin{equation*}
-        \sigma_{\bar{x}} = \frac{\sigma}{\sqrt{N}}
-    \end{equation*}
-    This signals diminishing returns for increasing $N$.
+          \begin{equation*}
+              \sigma_{\bar{x}} = \frac{\sigma}{\sqrt{N}}
+          \end{equation*}
+          This signals diminishing returns for increasing $N$.
     \item However, the above is assuming WSS. In a case without WSS:
-    \begin{equation*}
-        \bar{x} = \frac{\sum_{i=1}^{N}\left(\frac{x_i}{\sigma_i^2}\right)}{\sum_{i=1}^{N} \left(\frac{1}{\sigma_i^2}\right)}
-    \end{equation*}
-    \begin{equation*}
-        \sigma_{\bar{x}}^2 = \frac{1}{\sum_{i=1}^{N} \frac{1}{\sigma_i^2}}
-    \end{equation*}
+          \begin{equation*}
+              \bar{x} = \frac{\sum_{i=1}^{N}\left(\frac{x_i}{\sigma_i^2}\right)}{\sum_{i=1}^{N} \left(\frac{1}{\sigma_i^2}\right)}
+          \end{equation*}
+          \begin{equation*}
+              \sigma_{\bar{x}}^2 = \frac{1}{\sum_{i=1}^{N} \frac{1}{\sigma_i^2}}
+          \end{equation*}
 \end{itemize}
 
 \subsection{Binomial Distribution}
@@ -82,13 +87,13 @@ where
     \item $2^\text{nd}$ moment: $np(1-p)$
     \item $3^\text{rd}$ moment: $\frac{(1-p)-p}{\sqrt{np(1-p)}}$
     \item Estimator for $1^\text{st}$ moment:
-    \begin{equation*}
-        \bar{x} = \frac{1}{N} \sum_{i=1}^{N} x_i
-    \end{equation*}
+          \begin{equation*}
+              \bar{x} = \frac{1}{N} \sum_{i=1}^{N} x_i
+          \end{equation*}
     \item Estimator for $2^\text{nd}$ moment:
-    \begin{equation*}
-        s^2 = \frac{1}{N-1} \sum_{i=1}^{N} (x_i - \bar{x})^2
-    \end{equation*}
+          \begin{equation*}
+              s^2 = \frac{1}{N-1} \sum_{i=1}^{N} (x_i - \bar{x})^2
+          \end{equation*}
 \end{itemize}
 
 \subsection{Poisson Distribution}
@@ -103,17 +108,17 @@ Represents scenarios with counting and waiting for events.
     \item $2^\text{nd}$ moment: $\lambda$
     \item $3^\text{rd}$ moment: $\frac{1}{\sqrt{\lambda}}$
     \item Estimator for $1^\text{st}$ moment:
-    \begin{equation*}
-        \bar{x} = \sum_{i=1}^{N} x_i
-    \end{equation*}
+          \begin{equation*}
+              \bar{x} = \sum_{i=1}^{N} x_i
+          \end{equation*}
     \item Estimator for $2^\text{nd}$ moment:
-    \begin{equation*}
-        s^2 = \sum_{i=1}^{N} x_i
-    \end{equation*}
+          \begin{equation*}
+              s^2 = \sum_{i=1}^{N} x_i
+          \end{equation*}
     \item Percent error:
-    \begin{equation*}
-        \frac{1}{\sqrt{\bar{x}}} \times 100\%
-    \end{equation*}
+          \begin{equation*}
+              \frac{1}{\sqrt{\bar{x}}} \times 100\%
+          \end{equation*}
 \end{itemize}
 
 \subsection{Laplace Distribution}
@@ -122,7 +127,7 @@ Represents scenarios with counting and waiting for events.
     f(x; \mu, b) = \frac{1}{2b} \exp\left[-\frac{x-\mu}{b}\right]
 \end{equation*}
 \begin{itemize}
-    \item $\mu$ and $b$ are parameters. 
+    \item $\mu$ and $b$ are parameters.
     \item $\mu$ is a location parameter.
     \item $b > 0$ is called "diversity."
     \item $1^\text{st}$ moment: $\mu$
@@ -153,12 +158,12 @@ We often assume that
     \item Stationary or WSS PDF: $\sigma_i \approx \sigma$
     \item Each measurement is independent and identically distributed (IID).
     \item \textbf{Method of Maximum Liklihood (MML)}
-    \begin{itemize}
-        \item Also known as Maximum Likelihood Method (MLM).
-        \item Maximum probability of reproducing the data.
-        \item An alternate method is \textbf{Maximum Entropy Method (MEM)} that seeks to add as much disorder as possible to the datapoints, but this class only focuses on MML.
-    \end{itemize}
-    \item An implicit assumption is the zero-mean process. We assume or subtract off the mean to make calculations much easier. 
+          \begin{itemize}
+              \item Also known as Maximum Likelihood Method (MLM).
+              \item Maximum probability of reproducing the data.
+              \item An alternate method is \textbf{Maximum Entropy Method (MEM)} that seeks to add as much disorder as possible to the datapoints, but this class only focuses on MML.
+          \end{itemize}
+    \item An implicit assumption is the zero-mean process. We assume or subtract off the mean to make calculations much easier.
 \end{enumerate}
 
 \subsection{Expectation Values}
@@ -192,23 +197,27 @@ You can also ignore summations:
     \item Uncertainty can either propagate in a \textbf{worst case} or \textbf{even-steven} (informally named by our professor) scenario.
     \item Basics for worst case propagation: Suppose there are height measurements $h_1$ and $h_2$ with uncertainties $\sigma_{h_1}$ and $\sigma_{h_2}$. Adding the two heights together also adds their uncertainties: $(h_1 \pm \sigma_{h_1}) + (h_2 \pm \sigma_{h_2}) = (h_1 + h_2) \pm (\sigma_{h_1} + \sigma_{h_2})$. This is the simplest example, but this can get much more complex, especially for operations like multiplication.
     \item \textbf{Even-steven formula} (Taylor series approximation):
-    \begin{equation*}
-        \sigma_{x}^2 \approx \sigma_u^2\left(\frac{\partial x}{\partial u}\right)^2 + \sigma_v^2\left(\frac{\partial x}{\partial v}\right)^2 + \dots + 2\sigma_{uv}^2\left(\frac{\partial x}{\partial u}\right)\left(\frac{\partial x}{\partial v}\right) + \dots
-    \end{equation*}
-    \begin{equation*}
-        \sigma_{uv}^2 = \frac{1}{N-1} \sum_{i=1}^N (u_i - \bar{u})(v_i - \bar{v})
-    \end{equation*}
-    \begin{itemize}
-        \item $\sigma_{uv}^2$ is the covariance, which is 0 when both $u$ and $v$ are \textbf{independent}.
-    \end{itemize}
+          \begin{equation*}
+              \sigma_{x}^2 \approx \sigma_u^2\left(\frac{\partial x}{\partial u}\right)^2 + \sigma_v^2\left(\frac{\partial x}{\partial v}\right)^2 + \dots + 2\sigma_{uv}^2\left(\frac{\partial x}{\partial u}\right)\left(\frac{\partial x}{\partial v}\right) + \dots
+          \end{equation*}
+          \begin{equation*}
+              \sigma_{uv}^2 = \frac{1}{N-1} \sum_{i=1}^N (u_i - \bar{u})(v_i - \bar{v})
+          \end{equation*}
+          \begin{itemize}
+              \item $\sigma_{uv}^2$ is the covariance, which is 0 when both $u$ and $v$ are \textbf{independent}.
+          \end{itemize}
 \end{itemize}
 
-\subsection{Chi-Squared Goodness of Fit}
+\subsection{Chi-Squared}
+
+The following only applies to data that is independent and identically distributed.
+
+\subsubsection{Chi-Squared Goodness of Fit}
 
 Given a histogram:
 
 \begin{equation*}
-    \chi^2 \equiv \sum_{j=1}^{n} \frac{(h(x_j) - NP(x_j))^2}{\sigma_j(h)^2} = \sum_{i=1}^{N} \frac{(x_i - \bar{x})^2}{\sigma_i^2}
+    \chi^2 \equiv \sum_{j=1}^{n} \left(\frac{h(x_j) - NP(x_j)}{\sigma_j(h)}\right)^2 = \sum_{i=1}^{N} \frac{(x_i - \bar{x})^2}{\sigma_i^2}
 \end{equation*}
 
 where
@@ -219,19 +228,65 @@ where
     \item $P(x_j)$ is the probability of the $j$-th bin.
     \item $\sigma_j(h)^2$ is the variance in the $j$-th bin.
 \end{itemize}
-\,
+
+$\chi^2$ is a measure of the goodness of fit of a model to the data. A smaller $\chi^2$ indicates a better fit. Ideal value is 0, but in practice it is around $n$ because the numerator and denominator of the summation are around the same order of magnitude.
+
+\subsubsection{Reduced Chi-Squared}
+
+\begin{align*}
+    \chi^2_\nu & = \frac{\chi^2}{\nu} \\
+    \nu        & = n - n_c
+\end{align*}
+
 \begin{itemize}
-    \item $\chi^2$ is a measure of the goodness of fit of a model to the data.
-    \item A smaller $\chi^2$ indicates a better fit. Ideal value is 0, but in practice it is around $n$ because the numerator and denominator of the summation are around the same order of magnitude.
-    \item \textbf{reduced chi-squared}:
-    \begin{equation*}
-        \chi^2_\nu = \frac{\chi^2}{\nu}
-    \end{equation*}
-    \begin{equation*}
-        \nu = n - n_c
-    \end{equation*}
-    \begin{itemize}
-        \item $n_c$ is the number of constraints. Usually 1.
-        \item $\nu$ is the number of degrees of freedom. Usually $n - 1$ with no outliers.
-    \end{itemize}
+    \item $n_c$ is the number of constraints. Usually 1.
+    \item $\nu$ is the number of degrees of freedom. Usually $n - 1$ with no outliers.
 \end{itemize}
+
+\subsubsection{Generalized Chi-Squared}
+
+\begin{equation*}
+    \chi^2 \equiv \sum_{i=1}^N \frac{(y_i - y(x_i))^2}{\sigma_i^2}
+\end{equation*}
+
+where
+
+\begin{itemize}
+    \item $y_i$ is the value of the $i$-th measurement,
+    \item $y(x_i)$ is the value of the model at the $i$-th measurement, and
+    \item $\sigma_i^2$ is the uncertainty in the $i$-th measurement.
+\end{itemize}
+
+\subsubsection{Chi-Squared Distribution}
+
+\begin{align*}
+    P_{\chi^2 > \chi^2_T}(\chi^2, \nu) & = \int_{\chi^2}^{\infty} P_{\chi^2}(\chi^2; \nu) ~ d\chi^2            \\
+    P_{\chi^2}(\chi^2, \nu)            & = \frac{1}{2^{\nu/2}\Gamma(\nu/2)} (\chi^2)^{\nu/2 - 1} e^{-\chi^2/2}
+\end{align*}
+
+where
+\begin{itemize}
+    \item $\nu$ is the number of degrees of freedom,
+    \item $\Gamma$ is the gamma function, and
+    \item $\chi^2$ is the chi-squared value. Note that $\chi^2$ is a single value, so do not treat it as $chi$ raised to 2.
+
+\end{itemize}
+
+The purpose of the chi-squared distrubtion is to determine the probability that the parent model would yield a $\chi^2$ value greater than the one calculated from the data.
+
+On exams, a table will be given to find the probability using the chi-squared distribution.
+
+\subsection{Probability of Exceeding a Correlation Coefficient}
+
+\begin{equation*}
+    P(r; N) = 2 \int_{|r|}^{1} \frac{\Gamma(\frac{\nu + 1}{2})}{\sqrt{\pi}\Gamma(\frac{\nu}{2})} (1-r^2)^{\frac{\nu - 2}{2}} dr
+\end{equation*}
+
+where
+\begin{itemize}
+    \item $\Gamma$ is the gamma function,
+    \item $r$ is the correlation coefficient, and
+    \item $\nu$ is the number of degrees of freedom. In this case, $\nu = N - 2$.
+\end{itemize}
+
+This is used to determine the probability that the sample appears correlated when it is not.

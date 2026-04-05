@@ -1,0 +1,70 @@
+\section{Remote Sensing}
+
+\textbf{Remote sensing} is the science of obtaining information about objects or areas from a distance, typically from aircraft or satellites. \textbf{Passive} remote sensing "watches" the system, collecting without impacting the system (e.g., photometer). \textbf{Active} remote sensing perturbs the system until it reaches steady-state again (e.g., radar). This "nudge" must be small to minimize disruption to the system. Passive remote sensing equipment is preferred as it tends to be less complex than active remote sensing equipment.
+
+\subsection{LiDAR}
+
+LiDAR, which stands for Light Detection and Ranging, is an active remote sensing method that uses pulses of infrared (or sometimes visible or ultraviolet) light to measure the system. LiDAR offers a higher resolution than radar due to using shorter wavelength of light than radio waves.
+
+\subsection{Radar}
+
+Radar, which stands for Radio Detection and Ranging, is an active remote sensing method that uses radio waves to measure the system. Radar offers a lower resolution than LiDAR due to using radio waves, which have a longer wavelength.
+
+\subsection{Angle of Spread}
+
+\begin{align*}
+    \theta & \sim \frac{\lambda}{D}                                 \\
+    \theta & = 1.22 \frac{\lambda}{D} \tag*{for circular apertures}
+\end{align*}
+
+where
+\begin{itemize}
+    \item $\theta$ is the angle of spread,
+    \item $\lambda$ is the wavelength of the light,
+    \item $D$ is the diameter of the aperture.
+\end{itemize}
+
+Thus it is clear why radar has a lower resolution than LiDAR, because radio waves have a longer wavelength and thus spread out much more. This leads to a \textbf{volume underfilled} scenario, in which the target does not fill the entire volume of the beam.
+
+\subsection{Doppler Effect}
+
+\begin{align*}
+    \lambda' & = \frac{v - v_s}{f}                 \\
+    f'       & = f_0'(\frac{v \pm v_o}{v \mp v_s})
+\end{align*}
+
+where
+\begin{itemize}
+    \item $\lambda'$ is the observed shifted wavelength,
+    \item $f'$ is the observed shifted frequency,
+    \item $v$ is the speed of the wave,
+    \item $v_o$ is the speed of the observer,
+    \item $v_s$ is the speed of the source, and
+    \item $f_0'$ is the emitted frequency.
+\end{itemize}
+
+\textbf{Sign conventions}: In the numerator, use + if the observer is moving towards the source, and - if the observer is moving away from the source. In the denominator, use - if the source is moving towards the observer, and + if the source is moving away from the observer.
+
+\subsection{Monostatic and Bistatic Systems}
+
+In a \textbf{monostatic} system, the transmitter and receiver are at the same location. In a \textbf{bistatic} system, the transmitter and receiver are at different locations (usually common for speed detection in rural areas).
+
+\subsection{Speed Detection}
+
+Speed detection is a common application of remote sensing and can use either radar or LiDAR. Radar speed detection uses the doppler effect to measure the speed of a vehicle, whereas LiDAR speed detection uses the time it takes for the light to return to the sensor to calculate the vehicle's speed.
+
+Radar has a low \textbf{signal-to-noise ratio} (SNR) compared to LiDAR at the receiver, allowing a car to detect when its speed is being tracked and jamming the reflected signal (thus, radio detectors have been outlawed in many places). LiDAR has a high SNR (especially when directed at license plates with a special coating), so while a car still detect when its speed is being tracked, it cannot jam the reflected signal (as a result, LiDAR detectors have not been outlawed).
+
+\subsection{Stealth}
+
+Stealth aircraft conceal themselves to radar detection by using a combination of radar-absorbent materials and clever geometry to deflect radar waves away from the receiver. This is why stealth aircraft are not completely invisible to radar, but they have a very low radar cross-section.
+
+\subsection{Jenny Jump}
+
+Jenny Jump uses active remote sensing to detect the height that particles are in the atmosphere. The transmitter sends a beam of green light up into the atmosphere 30 times per second. (One pulse would have a low SNR, which is solved by stacking 30 pulses.) The receiver then detects the light that is scattered back to it from the particles in the atmosphere. The height of the particles is then calculated using the time it takes for the light to return to the receiver:
+
+\begin{align*}
+    z = \frac{c \Delta t}{2}
+\end{align*}
+
+Among other information, this receiver can detect gravity waves (which are a type of buoyancy waves) in the atmosphere. Gravity waves are a cause of clear-air turbulence, which is a hazard for aircraft.

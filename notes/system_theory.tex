@@ -1,0 +1,58 @@
+\section{System Theory}
+
+\textbf{System theory} is the study of how individual components of a system interact with each other to produce a collective behavior. A \textbf{linear time-invariant (LTI)} system is a system that satisfies the following properties:
+\begin{itemize}
+    \item \textbf{Linearity}: If the input is multiplied by a constant, the output is multiplied by the same constant.
+    \item \textbf{Time-invariance}: If the input is shifted in time, the output is shifted by the same amount of time. In other words, the time at which the input is provided does not affect the system's output.
+\end{itemize}
+
+A simple diagram of a system is:
+\begin{center}
+    \begin{tikzpicture}
+        % Input coordinate and label
+        \node (input) at (0,0) {};
+        \node [above] at (0.7,0) {$x(t)$};
+
+        % The System Block
+        \node [block] (system) at (2.5,0) {$h(t)$};
+
+        % Output coordinate and label
+        \node (output) at (5,0) {};
+        \node [above] at (4.3,0) {$y(t)$};
+
+        % Arrows
+        \draw [->, >=stealth, thick] (input) -- (system);
+        \draw [->, >=stealth, thick] (system) -- (output);
+    \end{tikzpicture}
+\end{center}
+
+where $x(t)$ is the input, $h(t)$ is the system, and $y(t)$ is the output. The system is often considered a "black box" meaning we can only infer the properties of the system by observing the input and output.
+
+\vsp
+A system can also have a feedback from the output to the input, represented by $f(x)$:
+
+\begin{center}
+    \begin{tikzpicture}[fblock/.style={draw, rectangle, minimum width=1cm, minimum height=0.8cm, thick, text centered}]
+        % --- Nodes ---
+        \node [block] (system) at (2.5, 0) {$h(t)$};
+        \node (input)  at (-1, 0) {};
+        \node (output) at (5.5, 0) {};
+
+        % --- Main Flow ---
+        \draw [arr] (input) -- (system);
+        \draw [arr] (system) -- (output);
+
+        % --- Labels ---
+        \node [above] at (0, 0) {$x(t)$};
+        \node [above] at (5, 0) {$y(t)$};
+
+        % --- Feedback Loop with Function Block ---
+        \node [fblock] (feedback) at (2.5, -1.8) {$f(x)$};
+
+        \draw [thick] (4.5, 0) |- (feedback);
+        \draw [arr] (feedback) -| (0.5, 0);
+
+    \end{tikzpicture}
+\end{center}
+
+System theory involving feedback is called \textbf{control theory}.

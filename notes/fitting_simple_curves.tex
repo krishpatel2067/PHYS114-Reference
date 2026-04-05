@@ -1,0 +1,82 @@
+\section{Fitting a Simple Curvees}
+
+\subsection{Straight Line}
+
+Forward model:
+
+\begin{equation*}
+    y = a_0 + b_0 x
+\end{equation*}
+
+Let $\sigma_i$ denote the uncertainty in $y_i$. (The uncertainty in $x_i$ is assumed to be 0.) $x_i$ and $y_i$ are the data points.
+
+Minimize $\Delta y = y_i - y(x_i)$, the difference between the data points and the model. Assume that each $y_i$ is pulled from a stationary Gaussian distribution, and use the maximum likelihood method.
+
+The probability of a particular observation is
+\begin{equation*}
+    P_i = \frac{1}{\sigma_i \sqrt{2\pi}} \exp\left[-\frac{1}{2}\left(\frac{y_i - y(x_i)}{\sigma_i}\right)^2\right]\text{.}
+\end{equation*}
+
+For a $N$ measurements:
+
+\begin{equation*}
+    \prod_{i=1}^{N} P_i = \prod_{i=1}^{N}\left(\frac{1}{ \sigma_i \sqrt{2\pi}}\right) \exp\left[-\frac{1}{2}\sum_{i=1}^{N}\left(\frac{y_i - y(x_i)}{\sigma_i}\right)^2\right]\text{.}
+\end{equation*}
+
+For the model $y = a_0 + b_0 x$:
+
+\begin{equation*}
+    P(a_0, b_0) = \prod_{i=1}^{N}\left(\frac{1}{ \sigma_i \sqrt{2\pi}}\right) \exp\left[-\frac{1}{2}\sum_{i=1}^{N}\left(\frac{y_i - (a_0 + b_0 x_i)}{\sigma_i}\right)^2\right]
+\end{equation*}
+
+To maximize $P(a_0, b_0)$, we need to minimize the exponent:
+
+\begin{equation*}
+    \chi^2 = \sum_{i=1}^{N}\left(\frac{y_i - (a_0 + b_0 x_i)}{\sigma_i}\right)^2
+\end{equation*}
+
+To minimize $\chi^2$, we take the partial derivatives with respect to $a_0$ and $b_0$ and set them to 0.
+
+\vsp
+\begin{equation*}
+    \frac{\partial \chi^2}{\partial a_0} = 0 \quad \text{and} \quad \frac{\partial \chi^2}{\partial b_0} = 0\text{.}
+\end{equation*}
+
+The result is:
+
+\begin{align*}
+    \Delta = \sum \frac{1}{\sigma_i^2} \sum \frac{x_i^2}{\sigma_i^2} - \left(\sum \frac{x_i}{\sigma_i^2}\right)^2                                             \\
+    a_0 = \frac{1}{\Delta} \left( \sum \frac{x_i^2}{\sigma_i^2} \sum \frac{y_i}{\sigma_i^2} - \sum \frac{x_i}{\sigma_i^2} \sum \frac{y_i}{\sigma_i^2} \right) \\
+\end{align*}
+
+$b_0$ can be found as well, but the formula is not the focus of this course.
+\vsp
+The unertainty on $a_0$ and $b_0$ is given by:
+\begin{align*}
+    \sigma_z^2 = \sum \sigma_i^2 \left(\frac{\partial z}{\partial y_i}\right)^2
+\end{align*}
+
+where $z$ can be $a_0$ or $b_0$. Note that the number of contraints $n_C$ is 2 since due to $a_0$ and $b_0$.
+
+\subsection{Polynomials}
+
+Forward modeL:
+
+\begin{equation*}
+    y(x_i) = \sum_{k=1}^m a_k f_k(x_i)
+\end{equation*}
+
+where $f_k(x_i) = 1, x_i, x_i^2, \dots$ is a polynomial parent function.
+
+\vsp
+Carry out a similar process as fitting a straight line:
+
+\begin{equation*}
+    P = \prod_{i=1}^{N}\left(\frac{1}{ \sigma_i \sqrt{2\pi}}\right) \exp\left[-\frac{1}{2}\sum_{i=1}^{N}\left(\frac{y_i - \sum_{k=1}^m a_k f_k(x_i)}{\sigma_i}\right)^2\right]
+\end{equation*}
+
+Thus:
+
+\begin{equation*}
+    \frac{\partial \chi^2}{\partial a_\ell} = 0 \tag*{for $\ell = 1, \dots, m$}
+\end{equation*}

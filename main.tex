@@ -4,6 +4,18 @@
 
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\newcommand{\vsp}{\vspace{1em}}
+\newcommand{\rect}{\text{rect}}
+\newcommand{\sinc}{\text{sinc}}
+
+\tikzset{
+    block/.style={draw, rectangle, minimum width=2cm, minimum height=1.5cm, thick, text centered},
+    arr/.style={->, >=stealth, thick}
+}
 
 \begin{document}
 
@@ -12,5 +24,10 @@
 \input{notes/research_intro}
 \input{notes/fwd_model_photometer}
 \input{notes/dist_err_analysis}
-
+\input{notes/remote_sensing}
+\input{notes/monte_carlo}
+\input{notes/fitting_simple_curves}
+\input{notes/linearization}
+\input{notes/system_theory}
+\input{notes/perturbation_theory}
 \end{document}
