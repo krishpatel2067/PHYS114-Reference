@@ -64,6 +64,24 @@ This theorem is useful in because convolutions are much slower to compute than t
     \text{PSD}(\omega) = \left| X(\omega) \right|^2 = (\text{real})^2
 \end{equation*}
 
+\subsection{Windowing Functions}
+
+The Fourier transform inherently messes with the spectral content of a signal. To mitigate this, we can use windowing functions.
+
+\begin{equation*}
+    \mathcal{F}\left\{x(t)\right\} = \mathcal{F}\left\{x(t)w(t)\right\} = X(\omega) \ast W(\omega)
+\end{equation*}
+
+where $w(t)$ is the windowing function.
+
+The perfect window needs an infinite number of data points, which is impossible to achieve in practice. Instead, we want to minimize the \textbf{width} of the \textbf{main lobe} in a dB-vs-frequency plot of the window function.
+
+\subsubsection{Hanning Window}
+
+\begin{equation*}
+    W(n) = \frac{1}{2}\left[1 - \cos\left(\frac{2\pi n}{N-1}\right)\right]
+\end{equation*}
+
 PSD has multiple full-forms:
 
 \begin{itemize}
