@@ -29,7 +29,32 @@ If $N = 2^q$ for some integer $q$, then the DFT can be computed much faster usin
 
 \subsection{Fourier Transform Table}
 
-[work in progress]
+There are many Fourier transform pairs, but these are the ones we will need in this class.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{cc}
+        $x(t)$              & $X(\omega)$                                                    \\
+        \hline
+        \hline
+        1                   & $2\pi \delta(\omega)$                                          \\
+        $\delta(t)$         & 1                                                              \\
+        $\rect(t/T)$        & $T ~ \sinc(\frac{T}{2\pi} \omega)$                             \\
+        $\sinc(\omega t)$   & $\frac{1}{\omega_0} \rect(\frac{\omega}{2\pi \omega_0})$       \\
+        $\cos (\omega_0 t)$ & $\pi[\delta(\omega - \omega_0) + \delta(\omega + \omega_0)]$   \\
+        $\sin (\omega_0 t)$ & $-i\pi[\delta(\omega - \omega_0) - \delta(\omega + \omega_0)]$ \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Convolution Theorem}
+
+\begin{equation*}
+    x(t) \ast h(t) = \mathcal{F}^{-1}\left\{\mathcal{F}\left\{x(t)\right\} \mathcal{F}\left\{h(t)\right\}\right\}
+\end{equation*}
+Notice that multiplication in the time domain is equivalent to convolution in the frequency domain, and convolution in the time domain is equivalent to multiplication in the frequency domain.
+
+This theorem is useful in because convolutions are much slower to compute than the Fourier transform.
 
 \subsection{PSD}
 
