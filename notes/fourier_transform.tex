@@ -1,0 +1,51 @@
+\section{Fourier Transform}
+
+\begin{equation*}
+    \mathcal{F}\left\{x(t)\right\} \equiv X(\omega) \equiv \int_{-\infty}^{\infty} x(t) e^{-i\omega t} dt
+\end{equation*}
+
+The \textbf{Fourier transform} $\mathcal{F}$ maps a signal from the time domain to the frequency ($\omega$) domain. It can also be used on spatial data. A key advantage of the Fourier transform is data compression: frequency values often take up much less storage space than a full representation of the signal in the time domain.
+
+\vsp
+The convention is to use a lowercase function like $x(t)$ in the time domain and an uppercase function like $X(\omega)$ in the frequency domain.
+
+\vsp
+The integral usually yields a real and an imaginary component. The imaginary component contains phase information. However, we are usually only interested in the real component since that yields frequency information.
+
+\subsection{Discrete Fourier Transform}
+
+\begin{equation*}
+    \mathcal{F}\left\{x(n)\right\} \equiv X(k) \equiv \sum_{n = 0}^{N-1} x(n) e^{-i\frac{2\pi kn}{N}}
+\end{equation*}
+
+where $N$ is the number of data points.
+
+\vsp
+The \textbf{discrete Fourier transform (DFT)} is suitable for computers. However, in practice, software uses the FFT.
+
+\subsection{Fast Fourier Transform}
+
+If $N = 2^q$ for some integer $q$, then the DFT can be computed much faster using the \textbf{fast Fourier transform (FFT)}. Whereas the regular Fourier transform and DFT take $O(N^2)$ time to compute, the FFT takes $O(N \log N)$ time to compute. Any number of data points can be brought to the next highest power of 2 by padding the ends with zeros (a technique called \textbf{zero-padding}).
+
+\subsection{Fourier Transform Table}
+
+[work in progress]
+
+\subsection{PSD}
+
+[work in progress - this topic will be covered later in the class]
+
+\begin{equation*}
+    \text{PSD}(\omega) = \left| X(\omega) \right|^2 = (\text{real})^2
+\end{equation*}
+
+PSD has multiple full-forms:
+
+\begin{itemize}
+    \item Power Spectrum
+    \item Power Spectrum Distribution
+    \item Power Spectral Distribution
+    \item Power Spectral Density
+\end{itemize}
+
+Each are technically defined differently, but are often used interchangeably. We will stick to PSD to avoid any confusion.

@@ -36,8 +36,8 @@ Also known as the Heaviside step function.
 \subsection{Rectangle Function}
 
 \begin{align*}
-    \rect\left(\frac{t}{a}\right)     & \equiv (\text{a rectangle centered at $x=0$ with width $a$}) \\
-    \rect\left(\frac{t - X}{Y}\right) & \equiv u(t - X + Y/2) - u(t - X - Y/2)
+    \rect\left(\frac{t - t_0}{a}\right) & \equiv (\text{a rectangle centered at $x=t_0$ with width $a$}) \\
+    \rect\left(\frac{t - X}{Y}\right)   & \equiv u(t - X + Y/2) - u(t - X - Y/2)
 \end{align*}
 
 \subsection{Sinc Function}
@@ -64,4 +64,5 @@ Properties:
 \begin{itemize}
     \item When $x(t) = \delta(t)$, $y(t) = h(t)$.
     \item After many convolutions, the output will approach a Gaussian distribution.
+    \item A delay circuit is when a function is shifted without distortion.
 \end{itemize}
