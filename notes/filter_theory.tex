@@ -1,0 +1,243 @@
+\section{Filter Theory}
+
+\subsection{Introduction}
+
+Filter theory often deals in the spectral (frequency) domain to process signals. For example, "AC hum" (often 60 Hz with a 120-Hz harmonic) is a common source of noise that can be removed by filters.
+
+\vsp
+
+Another application of filter theory is basic image editing. For example, a picture of a tiger behind bars can be edited to remove the bars by applying a filter that removes the frequencies corresponding to the bars. Modern smartphones use such filters for photography and image processing.
+
+\subsection{Types of Filters}
+
+\subsubsection{Band Stop}
+
+A band stop filter \emph{removes} a specific range of frequencies from a signal. For "AC hum", a band stop filter would remove the frequencies around 60 Hz or 120 Hz.
+
+\subsubsection{Band Pass}
+
+A band pass filter (the opposite of a band stop filter) \emph{passes} only a specific range of frequencies through the filter.
+
+\subsubsection{Low Pass}
+
+A low pass filter suppresses the high frequencies. In images, this applies smoothing and reduces "graininess."
+
+\subsubsection{High Pass}
+
+A high pass filter suppresses the low frequencies. In images, this sharpens the image and adds contrast.
+
+\subsection{Log-Log PSD Plots}
+
+Often times, linear plots are not helpful due to the large range of frequencies and powers, generating curves that are not easy to analyze. Log-log PSD plots use the logarithm of PSD on the y-axis and the logarithm of the frequency on the x-axis, helping visualize the PSD for a wide range of frequencies and powers via a linear curve. Noise forms a straight line on a log-log PSD plot, and signals form discernible peaks. The goal of filters is to enhance signals and suppress noise by altering the slope of the PSD plot.
+
+\vsp
+
+The \textbf{DC offset} is the average constant value of the signal, leading to a large spike at $\omega = 0$, which can distort the plot's scale and obscure the rest of the signal. Thus, it is best to remove the DC offset before plotting the PSD in a process called \textbf{zero-meaning} the data.
+
+\subsection{Types of Noise}
+
+\subsubsection{White Noise}
+
+White noise has a constant power spectral density across all frequencies, leading to a flat line on a log-log PSD plot. This is the most desirable type of noise because it is the easiest to filter out (e.g. via a band pass filter for a specific signal frequency).
+
+\subsubsection{Red Noise}
+
+Red noise has a power spectral density that dominates in the low frequencies and rapidly drops off with increasing frequency. This is tougher to filter out than white noise especially if the signal is in the low frequencies. In practice, engineers often use a process called \textbf{whitening} to convert red noise into white noise.
+
+\subsubsection{Pink Noise}
+
+Pink noise has a slope between that of white and red noise with a power spectral density that more slowly decreases with frequency. Most electronic components create pink noise.
+
+\subsection{FPGA}
+
+A \textbf{Field-Programmable Gate Array (FPGA)} is a type of integrated circuit that can be programmed to perform a wide range of functions after manufacturing it. They bridge the gap between software and hardware, allowing for high-speed, real-time signal processing.
+
+\subsection{FIR and IIR}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cc}
+        FIR                                & IIR                                \\
+        \hline
+        \hline
+        \textbf{Finite Impulse Response}   & \textbf{Infinite Impulse Response} \\
+        No feedback loops                  & Feedback loops                     \\
+        More stable                        & Less stable                        \\
+        Linear phase                       & Loses phase information            \\
+        More computationally expensive     & Less computationally expensive     \\
+        More memory intensive              & Less memory intensive              \\
+        Less mathematically complex        & More mathematically complex        \\
+        e.g. moving average, raised cosine & e.g. Butterworth, Chebyshev        \\
+        \hline
+    \end{tabular}
+\end{table}
+
+The \textbf{order} of a filter (either FIR or IIR) is the number of delay blocks used ($Z^{-1}$). The higher the order, the more computationally expensive the filter is.
+
+\vsp
+
+An FIR filter's response eventually goes to 0, while an IIR filter's response may propagate forever due to feedback loops. A higher-order FIR filter leads to a sharper frequency cutoff. An FIR filter is also less mathematically complex than an IIR filter, but it generally requires a higher order to achieve the same level of performance as an IIR filter. This difference in computational complexity is why IIR filters are often preferred in real-time applications.
+
+\vsp
+
+An IIR filter loses linear phase due to feedback loops, which can cause phase distortion in the signal. Because FIR filters preserve linear phase, they are useful when signal distortion is unacceptable such as in image processing or data communication.
+
+\vsp
+
+Some examples of IIR filters:
+
+\begin{itemize}
+    \item \textbf{Butterworth filter}: Slow roll-off, maximally flat passband
+    \item \textbf{Chebyshev filter}: Faster roll-off, ripples in passband
+\end{itemize}
+
+\vsp
+
+An example of an FIR filter:
+
+\begin{center}
+    \begin{tikzpicture}[
+        >={Stealth[scale=1.2]},
+        delay/.style={rectangle, draw, minimum width=1.2cm, minimum height=1cm, font=\Large, thick},
+        multiplier/.style={regular polygon, regular polygon sides=3, draw, shape border rotate=180, minimum size=0.8cm, inner sep=0pt, thick},
+        sum/.style={circle, draw, minimum size=0.8cm, inner sep=0pt, font=\Large, thick},
+        thick]
+
+        % Coordinates & Main Top Line Nodes
+        \node (x) at (0, 0) {\Large $x[n]$};
+        \coordinate (tap0) at (1, 0);
+        \node[delay] (z1) at (2.5, 0) {$Z^{-1}$};
+        \coordinate (tap1) at (4, 0);
+        \node[delay] (z2) at (5.5, 0) {$Z^{-1}$};
+        \coordinate (tap2) at (7, 0);
+
+        % Multipliers (Taps)
+        \node[multiplier, label={right:\Large $b_0$}] (b0) at (1, -2.5) {};
+        \node[multiplier, label={right:\Large $b_1$}] (b1) at (4, -2.5) {};
+        \node[multiplier, label={right:\Large $b_2$}] (b2) at (7, -2.5) {};
+
+        % Summation nodes
+        \node[sum] (sum1) at (4, -5) {$\Sigma$};
+        \node[sum] (sum2) at (7, -5) {$\Sigma$};
+
+        % Output
+        \node (y) at (8.5, -5) {\Large $y[n]$};
+
+        % Wiring - Top Line Feed
+        \draw[->] (x) -- (z1);
+        \draw[->] (z1) -- (z2);
+        \draw (z2) -- (tap2); % Extend line slightly past last block
+
+        % Wiring - Taps Downward
+        \draw[->] (tap0) -- (b0);
+        \draw[->] (tap1) -- (b1);
+        \draw[->] (tap2) -- (b2);
+
+        % Wiring - Bottom Summation Line
+        \draw[->] (b0) |- (sum1); % Down and right into the side of the summation
+        \draw[->] (b1) -- (sum1);
+        \draw[->] (sum1) -- (sum2);
+        \draw[->] (b2) -- (sum2);
+        \draw[->] (sum2) -- (y);
+
+    \end{tikzpicture}
+\end{center}
+
+Things to note:
+
+\begin{itemize}
+    \item The domain is now discrete ($n$ instead of $t$) as $Z^{-1}$ expects discrete input.
+    \item This is a 2nd-order FIR filter since there are two $Z^{-1}$ delay blocks.
+    \item The number of \textbf{taps} is the number of multipliers $b_i$, which is always one more than the order of the filter (including for IIR filters).
+    \item The output is the sum of the delayed inputs multiplied by the coefficients.
+\end{itemize}
+
+An example of an IIR filter:
+
+\begin{center}
+    \begin{tikzpicture}[
+        >={Stealth[scale=1.1]},
+        delay/.style={rectangle, draw, minimum width=1.2cm, minimum height=1cm, font=\Large, thick},
+        multDown/.style={regular polygon, regular polygon sides=3, draw, shape border rotate=180, minimum size=0.8cm, inner sep=0pt, thick},
+        multLeft/.style={regular polygon, regular polygon sides=3, draw, shape border rotate=90, minimum size=0.8cm, inner sep=0pt, thick},
+        sum/.style={circle, draw, minimum size=0.9cm, inner sep=0pt, font=\Large, thick},
+        thick
+        ]
+
+        % Feedforward Path
+        \node (x) at (0, 0) {\Large $x[n]$};
+        \coordinate (tap0) at (0.8, 0);
+        \node[delay] (z1) at (2.2, 0) {$Z^{-1}$};
+        \coordinate (tap1) at (3.6, 0);
+        \node[delay] (z2) at (5.0, 0) {$Z^{-1}$};
+        \coordinate (tap2) at (6.4, 0);
+
+        % Feedforward Multipliers
+        \node[multDown, label={right:\Large $b_0$}] (b0) at (0.8, -1.5) {};
+        \node[multDown, label={right:\Large $b_1$}] (b1) at (3.6, -1.5) {};
+        \node[multDown, label={right:\Large $b_2$}] (b2) at (6.4, -1.5) {};
+
+        % Cascading Summation Nodes
+        \node[sum] (sum1) at (3.6, -3) {$\Sigma$};
+        \node[sum] (sum2) at (6.4, -3) {$\Sigma$};
+        \node[sum] (sum3) at (7.7, -3) {$\Sigma$};
+
+        % Output Path
+        \coordinate (outTap) at (8.8, -3);
+        \node (y) at (9.8, -3) {\Large $y[n]$};
+
+        % Feedback Path
+        \node[delay] (fz1) at (8.8, -4.5) {$Z^{-1}$};
+        \coordinate (tapF1) at (8.8, -6);
+        \node[multLeft, anchor=west, label={above:\Large $a_1$}] (a1) at (7.7, -6) {};
+
+        % --- WIRING ---
+
+        % Feedforward Top Line
+        \draw[->] (x) -- (z1);
+        \draw[->] (z1) -- (z2);
+        \draw[-]  (z2) -- (tap2);
+
+        % Taps into Feedforward Multipliers
+        \draw[->] (tap0) -- (b0);
+        \draw[->] (tap1) -- (b1);
+        \draw[->] (tap2) -- (b2);
+
+        % Feedforward Summation Cascade
+        \draw[->] (b0) |- (sum1.west);
+        \draw[->] (b1) -- (sum1.north);
+        \draw[->] (sum1) -- (sum2);
+        \draw[->] (b2) -- (sum2.north);
+        \draw[->] (sum2) -- (sum3);
+
+        % Summation to Output
+        \draw[-]  (sum3) -- (outTap);
+        \draw[->] (outTap) -- (y);
+
+        % Feedback Drop down and Left
+        \draw[->] (outTap) -- (fz1);
+        \draw[-]  (fz1) -- (tapF1);
+        \draw[->] (tapF1) -- (a1.east);
+
+        % Feedback up into the Final Adder (perfectly straight vertical line)
+        \draw[->] (a1.west) -- (sum3.south);
+
+        % Decorative Feedback Bracket
+        \draw[decorate, decoration={brace, amplitude=6pt}, gray, thick]
+        (7.1, -6.5) -- (7.1, -4.0) node[midway, left=8pt, font=\large] {feedback};
+
+    \end{tikzpicture}
+\end{center}
+
+Things to note:
+
+\begin{itemize}
+    \item The domain is also discrete like the FIR filter.
+    \item The diagram is virtually the same as the FIR filter with a feedback component attached.
+    \item It is important to distinguish between the \textbf{feedforward} and \textbf{feedback} components:
+          \begin{itemize}
+              \item The $a_i$ coefficients are the feedback coefficients, and the $b_i$ coefficients are the feedforward coefficients.
+              \item The $Z^{-1}$ block in the bottom right is a feedback delay block, and the $Z^{-1}$ blocks in the top are feedforward delay blocks.
+          \end{itemize}
+    \item This is a 2nd-order IIR filter since there are two feedforward delay blocks and only one feedback delay block, and the maximum of these is two.
+\end{itemize}

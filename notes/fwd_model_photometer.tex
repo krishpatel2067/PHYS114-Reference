@@ -18,7 +18,7 @@ A mathematical or quantitative description of the problem you're solving. One ca
     \item IF stands for interference filter.
     \item RX stands for receiver.
     \item TX stands for transmitter.
-    \item The receiver can either be a \textbf{photomultiplier tube (PMT)} or a \textbf{single-photon avalanche diode (SPAD)}. A PMT is a single-element instrument that counts individual photos precisely.
+    \item The receiver can either be a \textbf{photomultiplier tube (PMT)} or a \textbf{single-photon avalanche diode (SPAD)}. A PMT is a single-element instrument that counts individual photons precisely.
     \item \textbf{Charge-coupled devices (CCDs)} are an array of sensors that take an image of incoming photons. Scientific-grade CCDs are more expensive than PMTs.
     \item \textbf{Photon count formula}:
           \begin{equation*}
@@ -27,7 +27,7 @@ A mathematical or quantitative description of the problem you're solving. One ca
           where
           \begin{itemize}
               \item $N$ is the total number of photons.
-              \item $N_{\text{signal}}$ is the number of photons from the desired source.
+              \item $N_{\text{signal}}$ is the number of photons from the desired source, and
               \item $N_{\text{noise}}$ is the number of photons from other (undesirable) sources.
           \end{itemize}
     \item \textbf{Noise photon count formula}:
@@ -36,8 +36,8 @@ A mathematical or quantitative description of the problem you're solving. One ca
           \end{equation*}
           where
           \begin{itemize}
-              \item $N_C \, [\text{counts/s}]$ is the noise count rate.
-              \item $\Delta t \, [s]$ is the \textbf{integration time}, the time interval at which the detector collects photons.
+              \item $N_C \, [\text{counts/s}]$ is the noise count rate, and
+              \item $\Delta t \, [s]$ is the \textbf{integration time} (the time interval at which the detector collects photons).
           \end{itemize}
     \item \textbf{Signal photon count formula}:
           \begin{equation*}

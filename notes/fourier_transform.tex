@@ -4,13 +4,19 @@
     \mathcal{F}\left\{x(t)\right\} \equiv X(\omega) \equiv \int_{-\infty}^{\infty} x(t) e^{-i\omega t} dt
 \end{equation*}
 
-The \textbf{Fourier transform} $\mathcal{F}$ maps a signal from the time domain to the frequency ($\omega$) domain. It can also be used on spatial data. A key advantage of the Fourier transform is data compression: frequency values often take up much less storage space than a full representation of the signal in the time domain.
+The \textbf{Fourier transform} $\mathcal{F}$ maps a signal from the time domain to the frequency ($\omega$) domain, resulting in the signal's \textbf{spectrum}. It can also be used on spatial data. A key advantage of the Fourier transform is data compression: frequency values often take up much less storage space than a full representation of the signal in the time domain.
 
 \vsp
+
 The convention is to use a lowercase function like $x(t)$ in the time domain and an uppercase function like $X(\omega)$ in the frequency domain.
 
 \vsp
+
 The integral usually yields a real and an imaginary component. The imaginary component contains phase information. However, we are usually only interested in the real component since that yields frequency information.
+
+\vsp
+
+It is important to note that there are other definitions of the Fourier transform, which differ by a constnat multiple.
 
 \subsection{Discrete Fourier Transform}
 
@@ -21,17 +27,18 @@ The integral usually yields a real and an imaginary component. The imaginary com
 where $N$ is the number of data points.
 
 \vsp
+
 The \textbf{discrete Fourier transform (DFT)} is suitable for computers. However, in practice, software uses the FFT.
 
 \subsection{Fast Fourier Transform}
 
 If $N = 2^q$ for some integer $q$, then the DFT can be computed much faster using the \textbf{fast Fourier transform (FFT)}. Whereas the regular Fourier transform and DFT take $O(N^2)$ time to compute, the FFT takes $O(N \log N)$ time to compute. Any number of data points can be brought to the next highest power of 2 by padding the ends with zeros (a technique called \textbf{zero-padding}).
 
-\subsection{Fourier Transform Table}
+\subsection{Fourier Transform Pairs}
 
-There are many Fourier transform pairs, but these are the ones we will need in this class.
+There are many Fourier transform pairs, but these are the ones we will need in this class. The following table is constructed based on the definition of the Fourier transform used above. The pairs can change by a constant multiple depending on the definition used.
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{cc}
         $x(t)$              & $X(\omega)$                                                    \\
@@ -39,8 +46,8 @@ There are many Fourier transform pairs, but these are the ones we will need in t
         \hline
         1                   & $2\pi \delta(\omega)$                                          \\
         $\delta(t)$         & 1                                                              \\
-        $\rect(t/T)$        & $T ~ \sinc(\frac{T}{2\pi} \omega)$                             \\
-        $\sinc(\omega t)$   & $\frac{1}{\omega_0} \rect(\frac{\omega}{2\pi \omega_0})$       \\
+        $\rect(t/T)$        & $T ~ \sinc(\frac{T}{2\pi} \omega)$                             \\ % WRONG?? %
+        $\sinc(\omega t)$   & $\frac{1}{\omega_0} \rect(\frac{\omega}{2\pi \omega_0})$       \\ % WRONG?? %
         $\cos (\omega_0 t)$ & $\pi[\delta(\omega - \omega_0) + \delta(\omega + \omega_0)]$   \\
         $\sin (\omega_0 t)$ & $-i\pi[\delta(\omega - \omega_0) - \delta(\omega + \omega_0)]$ \\
         \hline
@@ -49,37 +56,23 @@ There are many Fourier transform pairs, but these are the ones we will need in t
 
 \subsection{Convolution Theorem}
 
-\begin{equation*}
-    x(t) \ast h(t) = \mathcal{F}^{-1}\left\{\mathcal{F}\left\{x(t)\right\} \mathcal{F}\left\{h(t)\right\}\right\}
-\end{equation*}
-Notice that multiplication in the time domain is equivalent to convolution in the frequency domain, and convolution in the time domain is equivalent to multiplication in the frequency domain.
+\begin{align*}
+    x(t) \ast h(t) = \mathcal{F}^{-1}\left\{\mathcal{F}\left\{x(t)\right\} \mathcal{F}\left\{h(t)\right\}\right\} \\
+    x(t) \cdot h(t) = \mathcal{F}^{-1}\left\{\mathcal{F}\left\{x(t)\right\} \ast \mathcal{F}\left\{h(t)\right\}\right\}
+\end{align*}
+
+Notice that multiplication in the time domain is equivalent to convolution in the frequency domain, and convolution in the time domain is equivalent to multiplication in the frequency domain. Thus, a convolution inherently changes the frequency content of a signal.
+
+\vsp
 
 This theorem is useful in because convolutions are much slower to compute than the Fourier transform.
 
 \subsection{PSD}
 
-[work in progress - this topic will be covered later in the class]
+The PSD represents the power of each frequency.
 
 \begin{equation*}
     \text{PSD}(\omega) = \left| X(\omega) \right|^2 = (\text{real})^2
-\end{equation*}
-
-\subsection{Windowing Functions}
-
-The Fourier transform inherently messes with the spectral content of a signal. To mitigate this, we can use windowing functions.
-
-\begin{equation*}
-    \mathcal{F}\left\{x(t)\right\} = \mathcal{F}\left\{x(t)w(t)\right\} = X(\omega) \ast W(\omega)
-\end{equation*}
-
-where $w(t)$ is the windowing function.
-
-The perfect window needs an infinite number of data points, which is impossible to achieve in practice. Instead, we want to minimize the \textbf{width} of the \textbf{main lobe} in a dB-vs-frequency plot of the window function.
-
-\subsubsection{Hanning Window}
-
-\begin{equation*}
-    W(n) = \frac{1}{2}\left[1 - \cos\left(\frac{2\pi n}{N-1}\right)\right]
 \end{equation*}
 
 PSD has multiple full-forms:
@@ -91,4 +84,110 @@ PSD has multiple full-forms:
     \item Power Spectral Density
 \end{itemize}
 
-Each are technically defined differently, but are often used interchangeably. We will stick to PSD to avoid any confusion.
+Each are technically defined differently, but are often used interchangeably. We will use PSD to avoid any confusion.
+
+\subsection{Windowing Functions}
+
+Collecting a finite number of samples in a signal (which is the experimental reality) inherently applies a rectangular window when performing the Fourier transform. This introduces \textbf{spectral leakage}, the inclusion of artificial frequencies near the ends of the data. Therefore when dealing with finite samples, it is essential to use a windowing function to mitigate the spectral leakage caused by the rectangular window.
+
+\begin{equation*}
+    \mathcal{F}\left\{x(t)\right\} = \mathcal{F}\left\{x(t)w(t)\right\} = X(\omega) \ast W(\omega)
+\end{equation*}
+
+where $w(t)$ is a windowing function.
+
+\vsp
+
+Windowing functions can be evaluated by plotting their Fourier transforms on a log scale magnitude using decibels (dB) in the frequency domain. This leads to a graph with multiple lobes. The \textbf{main lobe} is the first lobe and determines the frequency resolution, and the \textbf{side lobes} are the subsequent lobes that determine the dynamic range. The main lobe should be as narrow as possible, and the side lobes should be as low as possible, but in real life a compromise must be made. The rectangular window actually has the narrowest main lobe, but it has high side lobes. The most ideal case is with the main lobe having zero width and side lobes having zero amplitude, which is a Dirac delta spike at $\omega = 0$.
+
+\vsp
+
+However, this is not practical in real life as it requires an infinite number of data points. Thus, it is often more common to prioritize a large main lobe to drive down the side lobes and increase the dynamic range. This allows weaker signals to be easily discerned next to strong signals. This is at the cost of frequency resolution: two closely spaced frequency spikes may be blurred together into a single spike.
+
+\vsp
+
+We will only cover these 2 windows in this class, but many others exist (such as trapezoid, Barlett, Blackman, etc.). Nowaways, it is common to run through multiple windowing functions to see which one works best for the given application.
+
+\subsubsection{Hann Window}
+
+\vsp
+
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+                domain=0:1,           % Normalized time domain
+                samples=100,          % High sample count for a smooth curve
+                xlabel={n},
+                ylabel={Amplitude},
+                axis lines=middle,
+                enlargelimits=0.05,   % Adds a slight padding around the curve
+                width=10cm,
+                height=6cm,
+                xlabel style={at={(rel axis cs:0.5, -0.05)}, anchor=north},
+                ylabel style={at={(rel axis cs:0.0, 0.5)}, rotate=90, anchor=south},
+                xtick={1},
+                xticklabels={$N$},
+                ytick={1},
+                yticklabels={$1$}
+            ]
+            \addplot[thick] {0.5 * (1 - cos(360 * x))};
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+
+\begin{equation*}
+    W(n) = \frac{1}{2}\left[1 - \cos\left(\frac{2\pi n}{N-1}\right)\right]
+\end{equation*}
+
+where
+
+\begin{itemize}
+    \item $N$ is the window length (number of data points),
+    \item $n$ is the index of the data point, $0, 1, \dots, N-1$.
+\end{itemize}
+
+The Hann (or Hanning) window sacrifices frequency resolution for a lower dynamic range; that is, its main lobe is wider than the rectangular window's, but its side lobes are much lower.
+
+\vsp
+
+A notable feature about the Hann window is that it drives the ends of the signal to 0.
+
+\subsubsection{Hamming Window}
+
+\vsp
+
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+                domain=0:1,           % Normalized time domain
+                samples=100,          % High sample count for a smooth curve
+                xlabel={n},
+                ylabel={Amplitude},
+                axis lines=middle,
+                enlargelimits=0.05,   % Adds a slight padding around the curve
+                width=10cm,
+                height=6cm,
+                xlabel style={at={(rel axis cs:0.5, -0.05)}, anchor=north},
+                ylabel style={at={(rel axis cs:0.0, 0.5)}, rotate=90, anchor=south},
+                xtick={1},
+                xticklabels={$N$},
+                ytick={1},
+                yticklabels={$1$}
+            ]
+            \addplot[thick] {0.54 - 0.46 * cos(360 * x)};
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+
+\begin{equation*}
+    W(n) = 0.54 - 0.46 \cos\left(\frac{2\pi n}{N-1}\right)
+\end{equation*}
+
+where
+
+\begin{itemize}
+    \item $N$ is the window length (number of data points),
+    \item $n$ is the index of the data point, $0, 1, \dots, N-1$.
+\end{itemize}
+
+Unlike the Hann window, the Hamming window does not drive the ends of the signal to 0. It also has a larger main lobe and lower side lobes than the Hann window, but these side lobes remain more or less constant instead of decaying.

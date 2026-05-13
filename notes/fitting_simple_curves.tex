@@ -1,4 +1,6 @@
-\section{Fitting a Simple Curvees}
+\section{Fitting Simple Curves}
+
+Fitting to a Line
 
 \subsection{Straight Line}
 
@@ -17,7 +19,7 @@ The probability of a particular observation is
     P_i = \frac{1}{\sigma_i \sqrt{2\pi}} \exp\left[-\frac{1}{2}\left(\frac{y_i - y(x_i)}{\sigma_i}\right)^2\right]\text{.}
 \end{equation*}
 
-For a $N$ measurements:
+For $N$ measurements:
 
 \begin{equation*}
     \prod_{i=1}^{N} P_i = \prod_{i=1}^{N}\left(\frac{1}{ \sigma_i \sqrt{2\pi}}\right) \exp\left[-\frac{1}{2}\sum_{i=1}^{N}\left(\frac{y_i - y(x_i)}{\sigma_i}\right)^2\right]\text{.}
@@ -60,7 +62,7 @@ where $z$ can be $a_0$ or $b_0$. Note that the number of contraints $n_C$ is 2 s
 
 \subsection{Polynomials}
 
-Forward modeL:
+Forward model:
 
 \begin{equation*}
     y(x_i) = \sum_{k=1}^m a_k f_k(x_i)

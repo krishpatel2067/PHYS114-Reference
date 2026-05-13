@@ -113,11 +113,15 @@ Represents scenarios with counting and waiting for events.
           \end{equation*}
     \item Estimator for $2^\text{nd}$ moment:
           \begin{equation*}
-              s^2 = \sum_{i=1}^{N} x_i
+              s^2 = \sum_{i=1}^{N} x_i = \bar{x}
           \end{equation*}
     \item Percent error:
           \begin{equation*}
               \frac{1}{\sqrt{\bar{x}}} \times 100\%
+          \end{equation*}
+    \item SNR:
+          \begin{equation*}
+              \frac{\bar{x}}{\sigma} = \sqrt{\bar{x}}
           \end{equation*}
 \end{itemize}
 
@@ -192,21 +196,41 @@ You can also ignore summations:
 
 \subsection{Uncertainty Propagation}
 
-\begin{itemize}
-    \item Uncertainty is represented by $\sigma$. For example, the uncertainty in $\bar{x}$ is denoted as $\sigma_{\bar x}$.
-    \item Uncertainty can either propagate in a \textbf{worst case} or \textbf{even-steven} (informally named by our professor) scenario.
-    \item Basics for worst case propagation: Suppose there are height measurements $h_1$ and $h_2$ with uncertainties $\sigma_{h_1}$ and $\sigma_{h_2}$. Adding the two heights together also adds their uncertainties: $(h_1 \pm \sigma_{h_1}) + (h_2 \pm \sigma_{h_2}) = (h_1 + h_2) \pm (\sigma_{h_1} + \sigma_{h_2})$. This is the simplest example, but this can get much more complex, especially for operations like multiplication.
-    \item \textbf{Even-steven formula} (Taylor series approximation):
-          \begin{equation*}
-              \sigma_{x}^2 \approx \sigma_u^2\left(\frac{\partial x}{\partial u}\right)^2 + \sigma_v^2\left(\frac{\partial x}{\partial v}\right)^2 + \dots + 2\sigma_{uv}^2\left(\frac{\partial x}{\partial u}\right)\left(\frac{\partial x}{\partial v}\right) + \dots
-          \end{equation*}
-          \begin{equation*}
-              \sigma_{uv}^2 = \frac{1}{N-1} \sum_{i=1}^N (u_i - \bar{u})(v_i - \bar{v})
-          \end{equation*}
-          \begin{itemize}
-              \item $\sigma_{uv}^2$ is the covariance, which is 0 when both $u$ and $v$ are \textbf{independent}.
-          \end{itemize}
-\end{itemize}
+\subsubsection{Basics}
+
+Uncertainty is represented by $\sigma$. For example, the uncertainty in $\bar{x}$ is denoted as $\sigma_{\bar x}$. Uncertainty can either propagate in a \textbf{worst case} or \textbf{even-steven} (informally named by our professor) scenario.
+
+\subsubsection{Worst Case Propagation}
+
+Basics for worst case propagation: Suppose there are height measurements $h_1$ and $h_2$ with uncertainties $\sigma_{h_1}$ and $\sigma_{h_2}$. Adding the two heights together also adds their uncertainties: $(h_1 \pm \sigma_{h_1}) + (h_2 \pm \sigma_{h_2}) = (h_1 + h_2) \pm (\sigma_{h_1} + \sigma_{h_2})$. This is the simplest example, but this can get much more complex, especially for operations like multiplication.
+
+\subsubsection{"Even-Steven" Propagation}
+
+The Taylor series approximation of the "even-steven" propagation of uncertainty:
+
+\begin{equation*}
+    \sigma_{x}^2 \approx \sigma_u^2\left(\frac{\partial x}{\partial u}\right)^2 + \sigma_v^2\left(\frac{\partial x}{\partial v}\right)^2 + \dots + 2\sigma_{uv}^2\left(\frac{\partial x}{\partial u}\right)\left(\frac{\partial x}{\partial v}\right) + \dots
+\end{equation*}
+\begin{equation*}
+    \sigma_{uv}^2 = \frac{1}{N-1} \sum_{i=1}^N (u_i - \bar{u})(v_i - \bar{v})
+\end{equation*}
+
+where $\sigma_{uv}^2$ is the covariance, which is 0 when both $u$ and $v$ are \textbf{independent}.
+
+\subsubsection{"Even-Steven" Application}
+
+The "even-steven" propagation of uncertainty formula above can be applied to derive the uncertainty $\sigma_{\bar{x}}$ of the estimator $\bar{x}$:
+
+\begin{align*}
+    \bar{x}            & = \frac{1}{N} \sum_{i=1}^N x_i                                                             \\
+    \sigma_{\bar{x}}^2 & = \sum_{i=1}^N \sigma_{x_i}^2 \left(\frac{\partial \bar{x}}{\partial x_i}\right)^2 \tag{2} \\
+    \sigma_{\bar{x}}^2 & = \sum_{i=1}^N \sigma_{x_i}^2 \left(\frac{1}{N}\right)^2                                   \\
+    \sigma_{\bar{x}}^2 & = N \sigma^2 \left(\frac{1}{N}\right)^2               \tag {4}                             \\
+    \sigma_{\bar{x}}^2 & = \frac{\sigma^2}{N}                                                                       \\
+    \sigma_{\bar{x}}   & = \frac{\sigma}{\sqrt{N}}
+\end{align*}
+
+Often times, the dataset contains independent measurements, leading to the covariance terms being zero in (2). Furthermore, the dataset is often stationary or wide-sense stationary, meaning that $\sigma_{x_i} \approx \sigma$ for all $i$, as shown in (4).
 
 \subsection{Chi-Squared}
 

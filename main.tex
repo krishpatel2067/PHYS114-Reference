@@ -6,7 +6,11 @@
 \usepackage{graphicx}
 \usepackage{indentfirst}
 \usepackage{tikz}
-\usetikzlibrary{calc}
+\usetikzlibrary{calc, arrows.meta, shapes.geometric, positioning, decorations.pathreplacing}
+\usepackage{pgfplots}
+\usepackage{float}
+
+\pgfplotsset{compat=1.18}
 
 \newcommand{\vsp}{\vspace{1em}}
 \newcommand{\rect}{\text{rect}}
@@ -32,5 +36,6 @@
 \input{notes/system_theory}
 \input{notes/perturbation_theory}
 \input{notes/fourier_transform}
+\input{notes/filter_theory}
 \input{notes/random_facts}
 \end{document}

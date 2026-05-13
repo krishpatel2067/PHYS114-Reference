@@ -10,6 +10,19 @@ LiDAR, which stands for Light Detection and Ranging, is an active remote sensing
 
 Radar, which stands for Radio Detection and Ranging, is an active remote sensing method that uses radio waves to measure the system. Radar offers a lower resolution than LiDAR due to using radio waves, which have a longer wavelength.
 
+\subsection{Range Equation}
+
+\begin{align*}
+    r = \frac{c \Delta t}{2}
+\end{align*}
+
+where
+\begin{itemize}
+    \item $r$ is the range to the target,
+    \item $c$ is the speed of light,
+    \item $\Delta t$ is the time it takes for the light to return to the receiver.
+\end{itemize}
+
 \subsection{Angle of Spread}
 
 \begin{align*}
@@ -61,10 +74,6 @@ Stealth aircraft conceal themselves to radar detection by using a combination of
 
 \subsection{Jenny Jump}
 
-Jenny Jump uses active remote sensing to detect the height that particles are in the atmosphere. The transmitter sends a beam of green light up into the atmosphere 30 times per second. (One pulse would have a low SNR, which is solved by stacking 30 pulses.) The receiver then detects the light that is scattered back to it from the particles in the atmosphere. The height of the particles is then calculated using the time it takes for the light to return to the receiver:
-
-\begin{align*}
-    z = \frac{c \Delta t}{2}
-\end{align*}
+Jenny Jump uses active remote sensing to detect the height that particles are in the atmosphere. The transmitter sends a beam of green light up into the atmosphere 30 times per second. (One pulse would have a low SNR, which is solved by stacking 30 pulses.) The receiver then detects the light that is scattered back to it from the particles in the atmosphere. The height of the particles is then calculated using the time it takes for the light to return to the receiver (the range equation applied vertically).
 
 Among other information, this receiver can detect gravity waves (which are a type of buoyancy waves) in the atmosphere. Gravity waves are a cause of clear-air turbulence, which is a hazard for aircraft.
