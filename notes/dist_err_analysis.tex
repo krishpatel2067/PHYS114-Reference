@@ -1,46 +1,78 @@
 \section{Distributions and Uncertainty}
 
+\subsection{Introduction}
+
+A PDF stands for \textbf{probability density function}. This class only focuses on the Gaussian, Binomial, and Poisson distributions. The rest are extra information.
+
+\vsp
+
+Remember that probabilities multiply. Thus, the probability of reproducing an entire dataset is
+
+\begin{equation*}
+    \prod_{i=1}^{N} \text{PDF}(x_i) = p_1 p_2 \dots p_N\text{.}
+\end{equation*}
+
+\subsection{General Process}
+
+General process of data collection and processing:
+
+\begin{enumerate}
+    \item Determine PDF.
+    \item Create estimators for moments from data.
+    \item Determine if estimators are biased or unbiased using \textbf{expectation values}.
+    \item Determine the chi-squared goodness of fit.
+\end{enumerate}
+
+\subsection{Independence, Correlation, and Covariance}
+
+From strongest to weakest: independent, uncorrelated, and no covariance.
+
 \begin{itemize}
-    \item For \textbf{nonstationary} PDFs, the moments are in terms of time.
-    \item For \textbf{wide-sense stationary (WSS)} PDFs, only the \textbf{first two moments} are stationary, which represents most real-life phenomena.
-    \item For \textbf{stationary} PDFs, all the moments are constant and \emph{not} in terms of time.
-    \item \textbf{Moment generating function (continuous)}:
-          \begin{equation*}
-              n^\text{th} \text{ moment} = \int_{-\infty}^{\infty} x^n \, \text{PDF}(x) \, \partial x
-          \end{equation*}
-    \item \textbf{Moment generating function (discrete)}:
-          \begin{equation*}
-              n^\text{th} \text{ moment} = \sum_{i=1}^{\infty} x_i^n \, \text{PDF}(x_i)
-          \end{equation*}
-    \item This class only focuses on the Gaussian, Binomial, and Poisson distributions. The rest are extra information.
-    \item Remember that probabilities multiply. The probability of reproducing an entire dataset is
-          \begin{equation*}
-              \prod_{i=1}^{N} \text{PDF}(x_i) = p_1 p_2 \dots p_N
-          \end{equation*}
-    \item General process of data collection and processing:
-          \begin{enumerate}
-              \item Determine PDF.
-              \item Create estimators for moments from data.
-              \item Determine if estimators are biased or unbiased using \textbf{expectation values}.
-              \item Determine the chi-squared goodness of fit.
-          \end{enumerate}
-    \item From strongest to weakest: independent, uncorrelated, and no covariance.
-          \begin{itemize}
-              \item \textbf{Independent}: no true mathematical representation of independence.
-              \item \textbf{Uncorrelated}: $r \equiv \frac{\sigma^2_{XY}}{\sigma_X \sigma_Y} = 0$
-              \item \textbf{No covariance}: $\sigma^2_{XY} = 0$
-          \end{itemize}
+    \item \textbf{Independent}: no true mathematical representation of independence
+    \item \textbf{Uncorrelated}: $r \equiv \frac{\sigma^2_{XY}}{\sigma_X \sigma_Y} = 0$
+    \item \textbf{No covariance}: $\sigma^2_{XY} = 0$
 \end{itemize}
 
-\subsection{Gaussian Distribution}
+\subsection{Stationary PDFs}
+
+The moments in \textbf{nonstationary} PDFs are in terms of time. For \textbf{wide-sense stationary (WSS)} PDFs, only the \emph{first two moments} are stationary, which represents most real-life phenomena. The moments in \textbf{stationary} PDFs are all constant.
+
+\subsection{Assumptions}
+
+In this class, we assume:
+
+\begin{enumerate}
+    \item The PDF is \textbf{stationary} or \textbf{wide-sense stationary (WSS)}: $\sigma_i \approx \sigma$
+    \item Each measurement is \textbf{independent and identically distributed (IID)}.
+    \item Use the \textbf{Method of Maximum Liklihood (MML)}, which is the maximum probability of reproducing the data in an "alternate universe".
+          \begin{itemize}
+              \item Also known as Maximum Likelihood Method (MLM).
+              \item An alternate method is \textbf{Maximum Entropy Method (MEM)} that seeks to add as much disorder as possible to the datapoints, but this class only focuses on MML.
+          \end{itemize}
+    \item An implicit assumption is the zero-mean process.Assume the mean is zero or subtract off the mean to make calculations much easier.
+\end{enumerate}
+
+\subsection{Moment Generating Functions}
+
+\begin{align*}
+    n^\text{th} \text{ moment} & = \int_{-\infty}^{\infty} x^n \, \text{PDF}(x) \, \partial x \tag{continuous} \\
+                               & = \sum_{i=1}^{\infty} x_i^n \, \text{PDF}(x_i) \tag{discrete}
+\end{align*}
+
+\subsection{Common Distributions}
+
+\subsubsection{Gaussian Distribution}
 
 Also known as the normal distribution. Represents humans and many natural phenomena.
 
 \begin{equation*}
     f(x; \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left[-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right]
 \end{equation*}
+
+where $\mu$ and $\sigma$ are parameters.
+
 \begin{itemize}
-    \item $\mu$ and $\sigma$ are parameters.
+    \item
     \item $1^\text{st}$ moment (mean): $\mu$
     \item $2^\text{nd}$ moment (variance): $\sigma^2$
     \item Estimator for $1^\text{st}$ moment:
@@ -54,10 +86,12 @@ Also known as the normal distribution. Represents humans and many natural phenom
     \item 3rd moment (skewness)
     \item 4th moment (kurtosis)
     \item Uncertainty for $1^\text{st}$ moment:
+
           \begin{equation*}
               \sigma_{\bar{x}} = \frac{\sigma}{\sqrt{N}}
           \end{equation*}
-          This signals diminishing returns for increasing $N$.
+
+          This indicates diminishing returns for increasing $N$.
     \item However, the above is assuming WSS. In a case without WSS:
           \begin{equation*}
               \bar{x} = \frac{\sum_{i=1}^{N}\left(\frac{x_i}{\sigma_i^2}\right)}{\sum_{i=1}^{N} \left(\frac{1}{\sigma_i^2}\right)}
@@ -65,9 +99,17 @@ Also known as the normal distribution. Represents humans and many natural phenom
           \begin{equation*}
               \sigma_{\bar{x}}^2 = \frac{1}{\sum_{i=1}^{N} \frac{1}{\sigma_i^2}}
           \end{equation*}
+    \item Signal-to-noise ratio (SNR):
+          \begin{equation*}
+              \frac{\bar{x}}{s}
+          \end{equation*}
+    \item Percent error:
+          \begin{equation*}
+              \frac{s}{\bar{x}} \times 100\%
+          \end{equation*}
 \end{itemize}
 
-\subsection{Binomial Distribution}
+\subsubsection{Binomial Distribution}
 
 \begin{equation*}
     \text{PDF}(x; n, p) = \binom{n}{x} p^x (1-p)^{n-x}
@@ -76,10 +118,13 @@ Also known as the normal distribution. Represents humans and many natural phenom
 where
 
 \begin{equation*}
-    \binom{n}{x} = \frac{n!}{x!(n-x)!}
+    \binom{n}{x} = \frac{n!}{x!(n-x)!}\text{,}
 \end{equation*}
+
+$n$ is the number of trials, and $x$ is the number of successes.
+
 \begin{itemize}
-    \item Trials must be \textbf{independent}.
+    \item The $n$ trials must be \textbf{independent}.
     \item For $p$ large and $n$ large, similar to the \textbf{Gaussian distribution}.
     \item For $p$ low and $n$ large, similar to the \textbf{Poisson distribution}.
     \item $n$ and $p$ are parameters.
@@ -87,88 +132,80 @@ where
     \item $2^\text{nd}$ moment: $np(1-p)$
     \item $3^\text{rd}$ moment: $\frac{(1-p)-p}{\sqrt{np(1-p)}}$
     \item Estimator for $1^\text{st}$ moment:
+
           \begin{equation*}
               \bar{x} = \frac{1}{N} \sum_{i=1}^{N} x_i
           \end{equation*}
     \item Estimator for $2^\text{nd}$ moment:
+
           \begin{equation*}
               s^2 = \frac{1}{N-1} \sum_{i=1}^{N} (x_i - \bar{x})^2
           \end{equation*}
 \end{itemize}
 
-\subsection{Poisson Distribution}
+\subsubsection{Poisson Distribution}
+
 Represents scenarios with counting and waiting for events.
 
 \begin{equation*}
     \text{PDF}(x; \lambda) = \frac{\lambda^x e^{-\lambda}}{x!}
 \end{equation*}
+
+where $\lambda$ is the parameter.
+
 \begin{itemize}
-    \item $\lambda$ is the parameter.
     \item $1^\text{st}$ moment: $\lambda$
     \item $2^\text{nd}$ moment: $\lambda$
     \item $3^\text{rd}$ moment: $\frac{1}{\sqrt{\lambda}}$
     \item Estimator for $1^\text{st}$ moment:
+
           \begin{equation*}
               \bar{x} = \sum_{i=1}^{N} x_i
           \end{equation*}
     \item Estimator for $2^\text{nd}$ moment:
+
           \begin{equation*}
               s^2 = \sum_{i=1}^{N} x_i = \bar{x}
           \end{equation*}
-    \item Percent error:
-          \begin{equation*}
-              \frac{1}{\sqrt{\bar{x}}} \times 100\%
-          \end{equation*}
     \item SNR:
+
           \begin{equation*}
               \frac{\bar{x}}{\sigma} = \sqrt{\bar{x}}
           \end{equation*}
+    \item Percent error:
+
+          \begin{equation*}
+              \frac{1}{\sqrt{\bar{x}}} \times 100\%
+          \end{equation*}
 \end{itemize}
 
-\subsection{Laplace Distribution}
+\subsubsection{Laplace Distribution}
 
 \begin{equation*}
     f(x; \mu, b) = \frac{1}{2b} \exp\left[-\frac{x-\mu}{b}\right]
 \end{equation*}
+
+where $\mu$ is the location parameter and $b$ is the diversity parameter.
+
 \begin{itemize}
-    \item $\mu$ and $b$ are parameters.
-    \item $\mu$ is a location parameter.
-    \item $b > 0$ is called "diversity."
     \item $1^\text{st}$ moment: $\mu$
     \item $2^\text{nd}$ moment: $2b^2$
     \item $3^\text{rd}$ moment: $\emptyset$
 \end{itemize}
 
-\subsection{Gamma Distribution}
+\subsubsection{Gamma Distribution}
 
 \begin{equation*}
     f(x; \alpha, \beta) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x}
 \end{equation*}
 
-where $\Gamma$ is the gamma function.
+where $\Gamma$ is the gamma function, $\alpha$ is the shape parameter, and $\beta$ is the scale parameter.
 
 \begin{itemize}
-    \item $\alpha$ and $\beta$ are parameters.
-    \item $\alpha$ is the shape parameter.
-    \item $\frac{1}{\beta}$ is the scale parameter.
     \item $1^\text{st}$ moment: $\frac{\alpha}{\beta}$
     \item $2^\text{nd}$ moment: $\frac{\alpha}{\beta^2}$
     \item $3^\text{rd}$ moment: $\frac{2}{\sqrt{\alpha}}$
 \end{itemize}
-
-\subsection{Assumptions}
-In this class, we assume that
-\begin{enumerate}
-    \item Stationary or WSS PDF: $\sigma_i \approx \sigma$
-    \item Each measurement is independent and identically distributed (IID).
-    \item \textbf{Method of Maximum Liklihood (MML)}
-          \begin{itemize}
-              \item Also known as Maximum Likelihood Method (MLM).
-              \item Maximum probability of reproducing the data.
-              \item An alternate method is \textbf{Maximum Entropy Method (MEM)} that seeks to add as much disorder as possible to the datapoints, but this class only focuses on MML.
-          \end{itemize}
-    \item An implicit assumption is the zero-mean process. We assume or subtract off the mean to make calculations much easier.
-\end{enumerate}
 
 \subsection{Expectation Values}
 
@@ -177,18 +214,19 @@ In this class, we assume that
 \end{equation*}
 
 Examples:
+
 \begin{itemize}
     \item We expect the $\bar{x}$ estimator to yield $\mu$: $\langle \bar{x} \rangle = \mu $
     \item And similarly for $s^2$: $\langle s^2 \rangle = \sigma^2 $
 \end{itemize}
 
-A rule for expectation values is that you ignore constants:
+Ignore constants:
 
 \begin{equation*}
     \langle c \rangle = c
 \end{equation*}
 
-You can also ignore summations:
+Ignore summations:
 
 \begin{equation*}
     \langle \sum_{i=1}^N x_i \rangle = \sum_{i=1}^N \langle x_i \rangle
@@ -245,17 +283,21 @@ Given a histogram:
 \end{equation*}
 
 where
+
 \begin{itemize}
-    \item $n$ is the number of bins.
-    \item $h(x_j)$ is the value of the $j$-th bin.
-    \item $N$ is the total number of measurements.
-    \item $P(x_j)$ is the probability of the $j$-th bin.
-    \item $\sigma_j(h)^2$ is the variance in the $j$-th bin.
+    \item $n$ is the number of bins,
+    \item $h(x_j)$ is the value of the $j$-th bin
+    \item $N$ is the total number of measurements,
+    \item $P(x_j)$ is the probability of the $j$-th bin,
+    \item $\sigma_j(h)^2$ is the variance in the $j$-th bin,
+    \item $\sigma_i^2$ is the variance of the $i$-th measurement.
 \end{itemize}
 
-$\chi^2$ is a measure of the goodness of fit of a model to the data. A smaller $\chi^2$ indicates a better fit. Ideal value is 0, but in practice it is around $n$ because the numerator and denominator of the summation are around the same order of magnitude.
+$\chi^2$ is a measure of the goodness of fit of a model to the data. A smaller $\chi^2$ indicates a better fit. However, a high error $\sigma_i$ will result in a low $\chi^2$, so a suspciously good chi-square may indicate overly generous error bars. Thus, although the ideal value for chi-square is 0, in practice it should be around $n$ due to the numerator and denominator of the summation being around the same order of magnitude.
 
 \subsubsection{Reduced Chi-Squared}
+
+The reduced chi-square normalizes the chi-square goodness of fit by the number of degrees of freedom. This is useful for comparing fits of different models to the same data.
 
 \begin{align*}
     \chi^2_\nu & = \frac{\chi^2}{\nu} \\
@@ -298,6 +340,8 @@ where
 
 The purpose of the chi-squared distrubtion is to determine the probability that the parent model would yield a $\chi^2$ value greater than the one calculated from the data.
 
+\vsp
+
 On exams, a table will be given to find the probability using the chi-squared distribution.
 
 \subsection{Probability of Exceeding a Correlation Coefficient}
@@ -307,6 +351,7 @@ On exams, a table will be given to find the probability using the chi-squared di
 \end{equation*}
 
 where
+
 \begin{itemize}
     \item $\Gamma$ is the gamma function,
     \item $r$ is the correlation coefficient, and

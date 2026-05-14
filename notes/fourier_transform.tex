@@ -24,7 +24,13 @@ It is important to note that there are other definitions of the Fourier transfor
     \mathcal{F}\left\{x(n)\right\} \equiv X(k) \equiv \sum_{n = 0}^{N-1} x(n) e^{-i\frac{2\pi kn}{N}}
 \end{equation*}
 
-where $N$ is the number of data points.
+where
+
+\begin{itemize}
+    \item $n$ is the data point index,
+    \item $N$ is the number of data points,
+    \item $k$ is the frequency index.
+\end{itemize}
 
 \vsp
 
@@ -69,11 +75,15 @@ This theorem is useful in because convolutions are much slower to compute than t
 
 \subsection{PSD}
 
-The PSD represents the power of each frequency.
+The PSD represents the power of each frequency. Negative frequencies are ignored.
 
 \begin{equation*}
-    \text{PSD}(\omega) = \left| X(\omega) \right|^2 = (\text{real})^2
+    \text{PSD}(\omega) = \left| \mathcal{F}\left\{w(t) \cdot x(t)\right\} \right|^2 = (\text{real})^2
 \end{equation*}
+
+where $w(t)$ is a windowing function.
+
+\vsp
 
 PSD has multiple full-forms:
 
@@ -106,7 +116,7 @@ However, this is not practical in real life as it requires an infinite number of
 
 \vsp
 
-We will only cover these 2 windows in this class, but many others exist (such as trapezoid, Barlett, Blackman, etc.). Nowaways, it is common to run through multiple windowing functions to see which one works best for the given application.
+We will only cover the following two windows in this class, but many others exist (such as trapezoid, Barlett, Blackman, etc.). Nowaways, it is common to run through multiple windowing functions to see which one works best for the given application.
 
 \subsubsection{Hann Window}
 

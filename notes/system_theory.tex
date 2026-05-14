@@ -1,9 +1,11 @@
 \section{System Theory}
 
+\subsection{Introduction}
+
 \textbf{System theory} is the study of how individual components of a system interact with each other to produce a collective behavior. A \textbf{linear time-invariant (LTI)} system is a system that satisfies the following properties:
 \begin{itemize}
     \item \textbf{Linearity}: If the input is multiplied by a constant, the output is multiplied by the same constant.
-    \item \textbf{Time-invariance}: If the input is shifted in time, the output is shifted by the same amount of time. In other words, the time at which the input is provided does not affect the system's output.
+    \item \textbf{Time invariance}: If the input is shifted in time, the output is shifted by the same amount of time. In other words, the time at which the input is provided does not affect the system's output.
 \end{itemize}
 
 A simple diagram of a system is:
@@ -56,3 +58,66 @@ A system can also have a feedback from the output to the input, represented by $
 \end{center}
 
 System theory involving feedback is called \textbf{control theory}.
+
+\subsection{Dirac-Delta Function}
+
+\begin{align*}
+    \delta(t)                            & \equiv \begin{cases} \infty & t = 0 \\ 0 & t \neq 0 \end{cases} \\
+    \int_{-\infty}^{\infty} \delta(t) dt & = 1
+\end{align*}
+
+The Dirac-Delta function is continuous, which is useful in analog applications.
+
+\subsection{Kronecker Delta Function}
+
+\begin{align*}
+    \delta_{ij} & \equiv \begin{cases} 1 & i = j \\ 0 & i \neq j \end{cases}
+\end{align*}
+
+The Kronecker Delta function is discrete, which is useful in digital applications such as digital signal processing (DSP).
+
+\subsection{Step Function}
+
+\begin{align*}
+    u(t)              & \equiv \begin{cases} 1 & t \ge 0 \\ 0 & t < 0 \end{cases} \\
+    \frac{d}{dt} u(t) & = \delta(t)
+\end{align*}
+
+Also known as the Heaviside step function.
+
+\subsection{Rectangle Function}
+
+\begin{align*}
+    \rect\left(\frac{t - t_0}{a}\right) & \equiv (\text{a rectangle centered at $x=t_0$ with width $a$}) \\
+    \rect\left(\frac{t - X}{Y}\right)   & \equiv u(t - X + Y/2) - u(t - X - Y/2)
+\end{align*}
+
+\subsection{Sinc Function}
+
+\begin{align*}
+    \sinc(x) & \equiv \frac{\sin x}{x}
+\end{align*}
+
+\subsection{Convolutions}
+
+To get the output from the input:
+\begin{equation*}
+    y(t) = x(t) \ast h(t)
+\end{equation*}
+
+where $\ast$ is the convolution operator, defined as:
+\begin{equation*}
+    x(t) \ast h(t) = \int_{-\infty}^{\infty} x(\tau) h(t - \tau) d\tau
+\end{equation*}
+
+Convolutions can be informally thought as "smearing" two things together. Convolutions can be computed mathematically or graphically. In this class, we will only compute convolutions graphically.
+
+\vsp
+
+Properties:
+
+\begin{itemize}
+    \item When $x(t) = \delta(t)$, $y(t) = h(t)$.
+    \item After many convolutions, the output will approach a Gaussian distribution.
+    \item A delay circuit is when a function is shifted without distortion.
+\end{itemize}

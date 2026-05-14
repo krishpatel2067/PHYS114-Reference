@@ -17,6 +17,7 @@ Radar, which stands for Radio Detection and Ranging, is an active remote sensing
 \end{align*}
 
 where
+
 \begin{itemize}
     \item $r$ is the range to the target,
     \item $c$ is the speed of light,
@@ -31,6 +32,7 @@ where
 \end{align*}
 
 where
+
 \begin{itemize}
     \item $\theta$ is the angle of spread,
     \item $\lambda$ is the wavelength of the light,
@@ -47,6 +49,7 @@ Thus it is clear why radar has a lower resolution than LiDAR, because radio wave
 \end{align*}
 
 where
+
 \begin{itemize}
     \item $\lambda'$ is the observed shifted wavelength,
     \item $f'$ is the observed shifted frequency,
@@ -66,6 +69,8 @@ In a \textbf{monostatic} system, the transmitter and receiver are at the same lo
 
 Speed detection is a common application of remote sensing and can use either radar or LiDAR. Radar speed detection uses the doppler effect to measure the speed of a vehicle, whereas LiDAR speed detection uses the time it takes for the light to return to the sensor to calculate the vehicle's speed.
 
+\vsp
+
 Radar has a low \textbf{signal-to-noise ratio} (SNR) compared to LiDAR at the receiver, allowing a car to detect when its speed is being tracked and jamming the reflected signal (thus, radio detectors have been outlawed in many places). LiDAR has a high SNR (especially when directed at license plates with a special coating), so while a car still detect when its speed is being tracked, it cannot jam the reflected signal (as a result, LiDAR detectors have not been outlawed).
 
 \subsection{Stealth}
@@ -75,5 +80,7 @@ Stealth aircraft conceal themselves to radar detection by using a combination of
 \subsection{Jenny Jump}
 
 Jenny Jump uses active remote sensing to detect the height that particles are in the atmosphere. The transmitter sends a beam of green light up into the atmosphere 30 times per second. (One pulse would have a low SNR, which is solved by stacking 30 pulses.) The receiver then detects the light that is scattered back to it from the particles in the atmosphere. The height of the particles is then calculated using the time it takes for the light to return to the receiver (the range equation applied vertically).
+
+\vsp
 
 Among other information, this receiver can detect gravity waves (which are a type of buoyancy waves) in the atmosphere. Gravity waves are a cause of clear-air turbulence, which is a hazard for aircraft.
